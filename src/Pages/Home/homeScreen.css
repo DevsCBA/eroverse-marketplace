@@ -1,0 +1,36 @@
+.active-thumb {
+	--opacity: 0 !important;
+	border-color: var(--ero-colors-secondary) !important;
+	filter: drop-shadow(0px 4px 7px var(--ero-colors-secondaryAlpha-700));
+}
+
+div.active-thumb::after {
+	bottom: 0;
+	content: '';
+	left: 0;
+	opacity: 0.8;
+	position: 'absolute';
+	right: 0;
+	top: 0;
+	animation: widen 5s linear;
+	background-color: var(--ero-colors-primaryAlpha-500);
+}
+@keyframes widen {
+	0% {
+		width: 0;
+	}
+
+	to {
+		width: 100%;
+	}
+}
+
+.space-x > :not([hidden]) ~ :not([hidden]) {
+	margin-left: 1.5rem;
+}
+
+@media screen and (max-width: 48em) {
+	.space-x > :not([hidden]) ~ :not([hidden]) {
+		margin-left: 0.375rem;
+	}
+}

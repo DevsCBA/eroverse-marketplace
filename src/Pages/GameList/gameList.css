@@ -1,0 +1,13 @@
+.popular-genres .swiper-slide {
+	width: 233px;
+}
+@media (min-width: 768px) {
+	.popular-genres .swiper-slide {
+		width: 335px;
+	}
+}
+@media (min-width: 1280px) {
+	.popular-genres .swiper-slide {
+		width: 335px;
+	}
+}

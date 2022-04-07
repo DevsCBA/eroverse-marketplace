@@ -1,0 +1,13 @@
+.game-gallery .swiper-slide {
+	padding-bottom: 57.881%;
+	position: relative;
+}
+
+.game-gallery {
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.flex-grow {
+	flex-grow: 1;
+}

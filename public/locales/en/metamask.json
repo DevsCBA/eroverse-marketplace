@@ -1,0 +1,6 @@
+{
+    "walletConnect": "Wallet Connected",
+    "walletDisconnect": "Connect Wallet",
+    "walletErrorConnect": "Error connecting wallet",
+    "installMetamask": "Please install MetaMask browser extension to interact"
+}
