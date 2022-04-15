@@ -8,7 +8,7 @@ export const Card = ({ id, thumbnail, name, category, p2e, p, price }) => {
 
   return (
     <>
-      <Link to={`single-nft/${id}`} display={"block"} pos={"relative"}>
+      <Link to={`/single-nft/${id}`} display={"block"} pos={"relative"}>
         <Flex direction={"column"} alignItems={"center"} p={p}>
           <Flex flexWrap="wrap">
             {/*<Image
@@ -24,11 +24,7 @@ export const Card = ({ id, thumbnail, name, category, p2e, p, price }) => {
               }}
             />
 */}
-              <video  autoPlay  objectFit={"cover"}
-                     borderRadius={{
-                         base: "17px",
-                         md: "20px",
-                     }}>
+              <video  autoPlay  loop>
                   <source src={thumbnail} type="video/mp4"/>
               </video>
             {p2e !== 1 ? null : (
@@ -54,7 +50,7 @@ export const Card = ({ id, thumbnail, name, category, p2e, p, price }) => {
             )}
           </Flex>
           <Flex
-            as="detailbo"
+            /*as="detailbo"*/
             w={"full"}
             mt={{ base: "2", sm: "5" }}
             justifyContent={"space-between"}

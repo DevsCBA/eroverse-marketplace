@@ -42,6 +42,7 @@ const Metamask = () => {
 	const [select, setSelect] = useState();
 
 	const selectHandler = (e) => {
+		console.log(e)
 		setSelect(e.value);
 	};
 
@@ -51,23 +52,43 @@ const Metamask = () => {
 
 	const connectWalletHandler = () => {
 
-		console.log("called connectWalletHandler")
-		if (window.ethereum && !wallet) {
+		if (window.ethereum) {
 			// Set ethers provider
 			setProvider(new ethers.providers.Web3Provider(window.ethereum));
-			console.log(provider);
-
 			// Connect to metamask
 			window.ethereum
 				.request({ method: 'eth_requestAccounts' })
-				.then((result) => {
+				.then(async(result) => {
 					setConnButtonText(t('walletConnect'));
 					const {ethereum} = window;
 					if (ethereum) {
 						const provider = new ethers.providers.Web3Provider(ethereum);
 						const signer = provider.getSigner();
 						const contract = new ethers.Contract(marketplaceContract, abi, signer);
-						dispatch(startLogin(result[0], contract));
+						const { chainId } = await provider.getNetwork();
+						dispatch(startLogin(result[0], contract, chainId));
+
+						ethereum.on('accountsChanged', function (accounts) {
+							//console.log(`Selected account changed to ${accounts[0]}`, 'chainId',chainId);
+							if(!accounts[0]){
+								dispatch(startLogout())
+							}
+							else {
+								dispatch(startLogin(accounts[0],contract, chainId))
+							}
+						});
+						ethereum.on('networkChanged', async function  (netId) {
+							const networkId = process.env.REACT_APP_ENV === 'dev' ? 4: 1;
+							if(networkId.toString() !=netId.toString()){
+								dispatch(startLogin(result[0],null, netId))
+							}
+							else {
+								const provider = new ethers.providers.Web3Provider(ethereum);
+								const signer = provider.getSigner();
+								const contract = new ethers.Contract(marketplaceContract, abi, signer);
+								dispatch(startLogin(result[0],contract, netId))
+							}
+						}, false);
 					}
 
 				})
@@ -121,6 +142,7 @@ const Metamask = () => {
 		if (walletConnected === 'true') {
 			connectMyWallet();
 		}
+
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [wallet]);

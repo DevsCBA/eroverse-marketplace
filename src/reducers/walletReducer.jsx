@@ -5,7 +5,8 @@ const initialState = {
     wallet: null,
     walletHidden: null,
     balance: null,
-    contract:null
+    contract:null,
+    network:null
 }
 
 export const walletReducer = ( state = initialState, action ) => {
@@ -30,7 +31,9 @@ export const walletReducer = ( state = initialState, action ) => {
                 connected: false,
                 wallet: null,
                 walletHidden: null,
-                balance: null
+                balance: null,
+                contract:null,
+                network:null
             }
                 
 

@@ -5,7 +5,9 @@ export const types = {
     walletStartLogin: '[Wallet] Start login',
     walletLogout: '[Wallet] Logout',
     chargeBalance: '[Wallet] Charge Balance',
-    
+    walletUpdate: '[Wallet] Login',
+
+
 
     profileStartLoading: '[Profile] Start loading',
     profileLoaded: '[Profile] Profile Loaded',

@@ -32,7 +32,7 @@ export const CollectionHeader = ({info}) => {
                 The first adult gaming ecosystem on BSC. Play adult games, read adult comics and get paid in $BNB token.
               </Text>
             </Box>
-            <Box pl={{ base: "6", xl: "16" }} as="dashboard_box" px={"25px"} pos={"absolute"} bottom={{ base: "-50px", sm: "-50px" }} w={{ base: "100%", md: "60%", xl: "60%", "2xl": "49%" }}>
+            <Box pl={{ base: "6", xl: "16" }} px={"25px"} pos={"absolute"} bottom={{ base: "-50px", sm: "-50px" }} w={{ base: "100%", md: "60%", xl: "60%", "2xl": "49%" }}>
               <DashboardCard info={info}/>
             </Box>
           </Flex>

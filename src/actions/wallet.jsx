@@ -1,10 +1,10 @@
 import { types } from "../types/types";
 
-export const startLogin = ( wallet , contract) => {
+export const startLogin = ( wallet , contract, network) => {
     return async( dispatch ) => {
         localStorage.setItem('connected', true);
         let walletHidden = wallet.substr(0,2) + '...' + wallet.substr(wallet.length - 5)
-        dispatch( login({ wallet, walletHidden, contract }) )
+        dispatch( login({ wallet, walletHidden, contract, network }) )
     }
 }
 
@@ -23,6 +23,7 @@ export const startBalanceCharge = (balance) => {
 };
 
 
+
 const logout = () => ({ type: types.walletLogout });
 
 const login = ( wallet ) => ({
@@ -33,4 +34,9 @@ const login = ( wallet ) => ({
 const chargeBalance = ( balance ) => ({
     type: types.chargeBalance,
     payload: balance
+});
+
+const walletUpdate = ( wallet ) => ({
+    type: types.walletLogin,
+    payload: wallet
 });

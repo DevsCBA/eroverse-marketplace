@@ -14,23 +14,22 @@ export const SingleNFT = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
     const {loaded,nft, info} = useSelector((state) => state.collection);
-    const { wallet} = useSelector((state) => state.wallet);
+    const { wallet,network} = useSelector((state) => state.wallet);
 
     useEffect(() => {
         dispatch(collectionInfoLoading())
-    }, [dispatch,wallet]);
+    }, [dispatch,wallet,network]);
     useEffect(()=>{
         dispatch(collectionNftLoading(id));
-    },[dispatch,wallet,info])
+    },[dispatch,wallet,info,network, id])
 
-    //console.log("nft,loaded in single nft",nft,loaded);
     return (
     <>
       <Box mx={{ base: 4, md: 16 }}>
         <SingleNFTHeader nft={nft} />
       </Box>
 
-      <RegularGrid lastReleases={trending_nft_data} loaded={loaded} title="From the same collection" CardComponent={<Card />} />
+      <RegularGrid info={info} filterId={parseInt(id)} lastReleases={trending_nft_data} loaded={loaded} title="From the same collection" CardComponent={<Card />} />
     </>
   );
 };
