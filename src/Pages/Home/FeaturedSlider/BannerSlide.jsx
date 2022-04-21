@@ -10,7 +10,7 @@ export const BannerSlide = ({ name, category, id, image, thumbnail, p2e }) => {
     xl: "lg",
   });
   return (
-    <Link to={`games/${id}`}>
+    <Link to={`collection/${id}`}>
       <Box
         className="img"
         h={{ sm: 72, md: 96, xl: "458px" }}
@@ -56,7 +56,7 @@ export const BannerSlide = ({ name, category, id, image, thumbnail, p2e }) => {
           </Flex>
 
           <Button variant={"primary"} mt={{ base: 4, xl: "8" }} width={{ base: "full", sm: "auto" }} fontSize={"lg"} color={"title"} size={buttonSize} px={9}>
-            {t("View NFT")}
+            {t("View Collection")}
           </Button>
         </Flex>
       </Box>

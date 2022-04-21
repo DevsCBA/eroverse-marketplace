@@ -19,6 +19,7 @@ function App() {
               <Route path="/" element={<Layout/>}>
                 <Route index element={<HomeScreen/>}/>
                 <Route path="collection" element={<Collection/>}/>
+                 <Route path="collection/:id" element={<Collection/>}/>
                 <Route path="collection/single-nft/:id" element={<SingleNFT/>}/>
                 <Route path="profile" element={<Profile />} />
            */} <Route path="single-nft/:id" element={<SingleNFT/>}/>

@@ -65,32 +65,15 @@ export const collectionNftLoading = (nftId) => {
 	return async (dispatch) => {
 		let state = await store
 			.getState()
-		//console.log("---nftId----",nftId);
-        try{
-			//var nftInfo =  await state.wallet.contract.fetchItemInfo(nftId)
-
-			//console.log("---nftInfo----",nftInfo)
+	    try{
 			let data = state?.collection?.info?.nftView[nftId]
-			//console.log("---state nft----"+data)
 			dispatch(collectionNftLoaded(data));
         }
         catch (e){
         	console.log("error",e)
 		}
-
-        //console.log("---nftId----",nftId);
-
 	};
 };
-
-
-/*
-export const categorySelectedLoading = (category) => {
-	return async (dispatch) => {
-		dispatch(categorySelectedLoaded(category));
-	};
-};
-*/
 
 
 const collectionInfoLoaded = (data) => ({
