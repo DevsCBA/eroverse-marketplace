@@ -4,12 +4,12 @@ import React, { cloneElement } from "react";
 import "swiper/css";
 
 export const RegularGrid = (props) => {
-  const { lastReleases, translate: t, loaded, CardComponent, title, my, info={}, filterId} = props;
-   const mapArray = info?.nfts || [];
+  const { lastReleases, translate: t, loaded, CardComponent, title, my, info={}, filterId, collectionId} = props;
+  const mapArray = info?.nfts || [];
   const sliderOptions = mapArray.map((element) => {
     const { id, name, category_name, thumbnail_url, is_play2earn, price } = element || {};
     if(!filterId || filterId !==id){
-      return cloneElement(CardComponent, { key: element.id, id: id, name: name, category: category_name, thumbnail: thumbnail_url, p2e: is_play2earn, p: 4, price:price });
+      return cloneElement(CardComponent, { key: element.id, collectionId:collectionId,id: id, name: name, category: category_name, thumbnail: thumbnail_url, p2e: is_play2earn, p: 4, price:price });
     }  
     
   });

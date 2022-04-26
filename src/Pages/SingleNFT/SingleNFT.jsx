@@ -12,16 +12,16 @@ import {homeStartLoading} from "../../actions/game";
 
 export const SingleNFT = () => {
     const dispatch = useDispatch();
-    const { id } = useParams();
+    const { collectionId,nftId } = useParams();
     const {loaded,nft, info} = useSelector((state) => state.collection);
     const { wallet,network} = useSelector((state) => state.wallet);
 
     useEffect(() => {
-        dispatch(collectionInfoLoading())
-    }, [dispatch,wallet,network]);
+        dispatch(collectionInfoLoading(parseInt(collectionId || 1)))
+    }, [dispatch,wallet,network, collectionId]);
     useEffect(()=>{
-        dispatch(collectionNftLoading(id));
-    },[dispatch,wallet,info,network, id])
+        dispatch(collectionNftLoading(nftId));
+    },[dispatch,wallet,info,network, nftId])
 
     return (
     <>
@@ -29,7 +29,7 @@ export const SingleNFT = () => {
         <SingleNFTHeader nft={nft} />
       </Box>
 
-      <RegularGrid info={info} filterId={parseInt(id)} lastReleases={trending_nft_data} loaded={loaded} title="From the same collection" CardComponent={<Card />} />
+      <RegularGrid info={info} filterId={parseInt(nftId)} lastReleases={trending_nft_data} loaded={loaded} title="From the same collection" CardComponent={<Card />} />
     </>
   );
 };
