@@ -1,13 +1,24 @@
 import { types } from '../types/types';
 import axios from 'axios';
 
+const extraCollection = {
+	"id": 3,
+	"name": "Lust Epidemic",
+	"release_date": "02/23/2022",
+	"category_name": "Adventure",
+	"is_play2earn": 0,
+	"platform": "Desktop",
+	"thumbnail_url": "https://steamy-1.s3.us-east-1.amazonaws.com/Lust%20Epidemic/Lust-Epidemic-Thumbnail-Image-456x308.jpg"
+};
+
 export const gameStartLoading = (id) => {
 	return async (dispatch) => {
 		let url = process.env.REACT_APP_API_PROXY + '/games/' + id;
 		axios
 			.get(url)
 			.then((res) => {
-				dispatch(gameLoaded(res.data));
+				let features = res.data;
+				dispatch(gameLoaded(features));
 			})
 			.catch((error) => console.log('error', error));
 	};
@@ -38,7 +49,11 @@ export const homeStartLoading = () => {
 		axios
 			.get(url)
 			.then((res) => {
-				dispatch(homeLoadedFeatured(res.data));
+				let features = res.data;
+				features.splice(2,0,extraCollection);
+				console.log("featuresin actions",features)
+
+				dispatch(homeLoadedFeatured(features));
 			})
 			.catch((error) => console.log('error', error));
 

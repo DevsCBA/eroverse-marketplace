@@ -13,11 +13,10 @@ export const SingleNFTHeader = ({nft}) => {
   return (
     <>
       <Flex alignItems="center" direction={{ base: "column", lg: "row" }}>
-        { type === 'image' && <Image src={thumbnail_url} w={{ base: "auto", md: "45%", lg: "100%", xl: "50%" }} h={{ base: "auto", md: "45%", lg: "auto" }} />}
-        {type === 'video' && <video  autoPlay loop
-                                     style={{maxWidth: maxWidth}}>
+        {/*{ type === 'image' && <Image src={thumbnail_url} w={{ base: "auto", md: "45%", lg: "100%", xl: "50%" }} h={{ base: "auto", md: "45%", lg: "auto" }} />}*/}
+        <video key={thumbnail_url} autoPlay loop style={{maxWidth: maxWidth}}>
           <source src={thumbnail_url} type="video/mp4"/>
-        </video>}
+        </video>
         <Flex w={"full"} overflow="hidden" justifyContent="space-evenly" direction="column" px={{ base: 0, md: "4%", lg: "5%", xl: "3%", "2xl": "5%" }} py={{ base: "7%", md: "4%", lg: "7%" }}>
           <Text my={"1%"} variant="bold" color="white" fontSize="xx-large">
             {name || 'Kali Roses Rare'}

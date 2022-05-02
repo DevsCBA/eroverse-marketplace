@@ -16,7 +16,7 @@ export const HomeScreen = () => {
   const { t } = useTranslation(["home"]);
   const dispatch = useDispatch();
   const { last_release, featured, loaded } = useSelector((state) => state.games);
-  //console.log("fetured", featured);
+  //console.log("fetured------", featured);
   useEffect(() => {
     dispatch(homeStartLoading());
   }, [dispatch]);

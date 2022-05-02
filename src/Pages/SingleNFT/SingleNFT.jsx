@@ -23,6 +23,7 @@ export const SingleNFT = () => {
         dispatch(collectionNftLoading(nftId));
     },[dispatch,wallet,info,network, nftId])
 
+    //console.log("--info----",info)
     return (
     <>
       <Box mx={{ base: 4, md: 16 }}>

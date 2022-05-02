@@ -24,7 +24,7 @@ export const Card = ({ id, collectionId,thumbnail, name, category, p2e, p, price
               }}
             />
 */}
-              <video  autoPlay  loop>
+              <video  key={thumbnail} autoPlay  loop>
                   <source src={thumbnail} type="video/mp4"/>
               </video>
             {p2e !== 1 ? null : (
