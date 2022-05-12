@@ -4,6 +4,7 @@ import LogoBadge from "../../../Components/LogoBadge";
 import { useBreakpointValue } from '@chakra-ui/react';
 
 export const SingleNFTHeader = ({nft}) => {
+  console.log("---nft---",nft)
   const {createdBy, name,seller, price, thumbnail_url, type} = nft || {}
   const maxWidth = useBreakpointValue({
     md: "100%",

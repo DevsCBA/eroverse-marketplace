@@ -4,7 +4,6 @@ import React, { cloneElement } from "react";
 import "swiper/css";
 
 export const RegularGrid = (props) => {
-  console.log("--props---",props)
   const { lastReleases, translate: t, loaded, CardComponent, title, my, info={}, filterId, collectionId, showCollection,collections} = props;
   const mapArray = info?.nfts || collections || [];
   const sliderOptions = mapArray.map((element) => {
