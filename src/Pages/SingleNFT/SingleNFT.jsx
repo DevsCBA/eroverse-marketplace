@@ -30,7 +30,7 @@ export const SingleNFT = () => {
         <SingleNFTHeader nft={nft} />
       </Box>
 
-      <RegularGrid info={info} filterId={parseInt(nftId)} lastReleases={trending_nft_data} loaded={loaded} title="From the same collection" CardComponent={<Card />} />
+        {collectionId && <RegularGrid info={info} filterId={parseInt(nftId)} lastReleases={trending_nft_data} loaded={loaded} title="From the same collection" CardComponent={<Card />} />}
     </>
   );
 };

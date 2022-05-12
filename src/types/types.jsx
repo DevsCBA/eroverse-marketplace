@@ -32,7 +32,8 @@ export const types = {
     categorySelectedLoaded: '[Category] Category Selected Loaded',
 
     collectionInfo: '[Collection] Collection info Loaded',
-    collectionNFT: '[Category] Collection nft Loaded',
-    
+    collectionNFT: '[Collection] Collection nft Loaded',
+    trendingNFTs: '[Collection] Collection trendingNfts Loaded',
+    featuredCollections: '[Collection] Collection featuredCollections Loaded',
 }
  

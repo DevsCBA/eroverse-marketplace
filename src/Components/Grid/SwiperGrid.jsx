@@ -15,8 +15,8 @@ export const SwiperGrid = (props) => {
     "2xl": 16,
   });
 
-  const sliderOptions = lastReleases.map((element) => (
-    <SwiperSlide key={element.id} style={{ display: "flex" }}>
+  const sliderOptions = lastReleases.map((element,index) => (
+    <SwiperSlide key={index} style={{ display: "flex" }}>
       {React.cloneElement(CardComponent, { id: element.id, name: element.name, category: element.category_name, thumbnail: element.thumbnail_url, p2e: element.is_play2earn })}
     </SwiperSlide>
   ));

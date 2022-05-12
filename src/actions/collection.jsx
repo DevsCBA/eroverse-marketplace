@@ -29,6 +29,13 @@ const collection_contract_map= {
 	}
 }
 
+const addressIdMap = {
+	"0x7d1dcC9f99888f90cFBeB22E12f07249ecd65162":1,
+	"0x5dade0BCa8E052A6cC4FdBE6280E0dc19073038A":2,
+	"0x940cB7Fe02e02a09500485F90eA58332A0DD87c8":3,
+	"0x9f74036E7b05565C6052805a30c41889695E7d70":4,
+	"0x1846cB4e829C5d5c6B4ef7A9acc90148eC8292FC":5
+}
 async function getNFT(collectionId,tokenId) {
 	let url = "https://ipfs.io/ipfs/" + collection_contract_map[collectionId].ipfs + tokenId + '.json'
 	let urlObj
@@ -85,7 +92,6 @@ export const collectionInfoLoading = (id) => {
                     //document.getElementById('floor').innerHTML = bnbFloor.toString() + 'BNB';
 		}
 
-
 			let data = {'contractAddress':collectionContact,'total': '100', royalty:royalty, onsaleItems:onsaleItems, floarPrice:floarPrice,nfts:nfts,nftView};
 			//console.log("---data---",data)
 		 	dispatch(collectionInfoLoaded(data));
@@ -111,9 +117,89 @@ export const collectionNftLoading = (nftId) => {
 	};
 };
 
+export const trendingNftLoading = () => {
+	return async (dispatch) => {
+			let wallet = await store
+				.getState().wallet;
+
+			if(!wallet?.contract){
+				dispatch(collectionInfoLoaded({}));
+				return;
+			}
+			try{
+				let onsaleItems = await wallet.contract.fetchOnSaleItems();
+				let nfts = [];
+				if (onsaleItems.length > 0) {
+					let max = 3;
+					if (onsaleItems.length < max) {
+						max = onsaleItems.length;
+					}
+					for (var i = 0; i < max; i++) {
+						let id = addressIdMap[onsaleItems[i][1]]
+						let nft = await getNFT(id,parseInt(onsaleItems[i][2]),onsaleItems[i][1],onsaleItems[i][0],onsaleItems[i][3],onsaleItems[i][4]);
+                        nfts.push(nft)
+					}
+				}
+				dispatch(trendingNftLoaded(nfts));
+			}
+			catch (e){
+				console.log("--------error-------",e)
+			}
+		}
+
+};
+export const featuredNftLoading = () => {
+	return async (dispatch) => {
+		let wallet = await store
+			.getState().wallet;
+
+		if(!wallet?.contract){
+			dispatch(collectionInfoLoaded({}));
+			return;
+		}
+		let id = Math.floor(Math.random() * 5)
+		id = id === 0 ? 1: id;
+		let obj = collection_contract_map[id];
+		try{
+			let onsaleItems = await wallet.contract.fetchContractsOnSaleItems(obj.address);
+			console.log("fraty onsaleItems",onsaleItems)
+			let nfts = [];
+			if (onsaleItems.length > 0) {
+				let max = 3;
+				if (onsaleItems.length < max) {
+					max = onsaleItems.length;
+				}
+				for (let i = 0; i < max; i++) {
+					let nft = await getNFT(id,parseInt(onsaleItems[i][2]),onsaleItems[i][1],onsaleItems[i][0],onsaleItems[i][3],onsaleItems[i][4]);
+					nfts.push(nft);
+				}
+			}
+			const data = [{collectionId:id,nfts:nfts}];
+
+			dispatch(featuredCollectionsLoaded(data));
+		}
+		catch (e){
+			//dispatch(collectionInfoLoaded({}));
+			console.log("--------error-------",e)
+		}
+	}
+
+};
+
+
 
 const collectionInfoLoaded = (data) => ({
 	type: types.collectionInfo,
+	payload: data,
+});
+
+const trendingNftLoaded = (data) => ({
+	type: types.trendingNFTs,
+	payload: data,
+});
+
+const featuredCollectionsLoaded = (data) => ({
+	type: types.featuredCollections,
 	payload: data,
 });
 

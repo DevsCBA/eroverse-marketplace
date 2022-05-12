@@ -11,25 +11,36 @@ import { Card } from "../../Components/Cards/Card";
 import { RegularGrid } from "../../Components/Grid/RegularGrid";
 import { FeaturedCard } from "../../Components/Cards/FeaturedCard";
 import "./homeScreen.css";
+import {trendingNftLoading, featuredNftLoading} from "../../actions/collection";
 
 export const HomeScreen = () => {
   const { t } = useTranslation(["home"]);
   const dispatch = useDispatch();
-  const { last_release, featured, loaded } = useSelector((state) => state.games);
-  //console.log("fetured------", featured);
+    const { wallet, network} = useSelector((state) => state.wallet);
+    const { last_release, featured } = useSelector((state) => state.games);
+    const {trendingNfts, featuredCollections, loaded } = useSelector((state) => state.collection);
+    useEffect(() => {
+        dispatch(featuredNftLoading());
+        dispatch(trendingNftLoading());
+
+    }, [dispatch,wallet,network]);
+
   useEffect(() => {
     dispatch(homeStartLoading());
   }, [dispatch]);
 
+    console.log("---featuredCollections---",featuredCollections)
+
   return (
     <>
+
       <Box>
         <FeaturedSlider featured={featured} loaded={loaded} />
       </Box>
 
-      <SwiperGrid lastReleases={trending_nft_data} translate={t} loaded={loaded} CardComponent={<Card />} title="Trending NFTs" />
+      <SwiperGrid lastReleases={trendingNfts} translate={t} loaded={loaded} CardComponent={<Card />} title="Trending NFTs" />
 
-      <RegularGrid lastReleases={mockDataForFeaturedCollection} translate={t} loaded={loaded} title="Featured Collection" CardComponent={<FeaturedCard />} />
+      <RegularGrid  showCollection={true} collectionId={featuredCollections[0]?.collectionId} lastReleases = {last_release} info={featuredCollections[0]}  translate={t} loaded={loaded} title="Featured Collection" CardComponent={<Card/>} />
 
       <Box mt={{ base: 9, md: 12, xl: 20 }} mx={{ base: "4", md: "7", xl: "16", "2xl": "91px" }}>
         <FeaturedCreators lastReleases={mockDataFeaturedCreators} translate={t} loaded={loaded} />

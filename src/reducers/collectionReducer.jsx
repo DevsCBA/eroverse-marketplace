@@ -3,6 +3,8 @@ import { types } from '../types/types';
 const initialState = {
     info: {},
     nft: [],
+    trendingNfts:[],
+    featuredCollections:[{nfts:[], collectionId:null}],
     loaded: false,
 };
 
@@ -19,6 +21,19 @@ export const collectionReducer = (state = initialState, action) => {
             return {
                 ...state,
                 nft: action.payload,
+                loaded: true,
+            };
+
+        case types.trendingNFTs:
+            return {
+                ...state,
+                trendingNfts: action.payload,
+                loaded: true,
+            };
+        case types.featuredCollections:
+            return {
+                ...state,
+                featuredCollections: action.payload,
                 loaded: true,
             };
 

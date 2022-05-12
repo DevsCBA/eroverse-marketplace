@@ -3,12 +3,15 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-export const Card = ({ id, collectionId,thumbnail, name, category, p2e, p, price }) => {
+export const Card = ({ id, collectionId, showCollection, thumbnail, name, category, p2e, p, price }) => {
   const { t } = useTranslation(["home"]);
-
+  let linkUrl = showCollection ? `collection/${collectionId}`: `/single-nft/${collectionId}/${id}`
+    if(!collectionId){
+        linkUrl = `/single-nft/${id}`
+    }
   return (
     <>
-      <Link to={`/single-nft/${collectionId}/${id}`} display={"block"} pos={"relative"}>
+      <Link to={linkUrl} display={"block"} pos={"relative"}>
         <Flex direction={"column"} alignItems={"center"} p={p}>
           <Flex flexWrap="wrap">
             {/*<Image

@@ -22,7 +22,8 @@ function App() {
                  <Route path="collection/:id" element={<Collection/>}/>
                 <Route path="collection/single-nft/:id" element={<SingleNFT/>}/>
                 <Route path="profile" element={<Profile />} />
-           */} <Route path="single-nft/:collectionId/:nftId" element={<SingleNFT/>}/>
+           */}  <Route path="single-nft/:collectionId/:nftId" element={<SingleNFT/>}/>
+                  <Route path="single-nft/:nftId" element={<SingleNFT/>}/>
                 <Route path="games" element={<GameListScreen/>}/>
                 <Route path="search" element={<GameSearchScreen/>}/>
                 <Route path="games/:id" element={<GameScreen/>}/>

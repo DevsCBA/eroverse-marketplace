@@ -24,7 +24,7 @@ export const FeaturedCard = ({ id, thumbnail, name, p2e }) => {
                 md: "20px",
               }}
             />
-            {p2e !== 1 ? null : (
+            {!p2e ? null : (
               <Box
                 pos={"absolute"}
                 top={0}
