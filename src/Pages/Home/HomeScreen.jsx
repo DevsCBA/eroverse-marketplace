@@ -12,6 +12,7 @@ import { RegularGrid } from "../../Components/Grid/RegularGrid";
 import { FeaturedCard } from "../../Components/Cards/FeaturedCard";
 import "./homeScreen.css";
 import {trendingNftLoading, featuredNftLoading} from "../../actions/collection";
+import {collection_contract_map} from '../../constant/marketPlace';
 
 export const HomeScreen = () => {
   const { t } = useTranslation(["home"]);
@@ -32,7 +33,7 @@ export const HomeScreen = () => {
     <>
 
       <Box>
-        <FeaturedSlider featured={featured} loaded={loaded} />
+        <FeaturedSlider featured={featured} loaded={loaded} collectionMap={collection_contract_map} />
       </Box>
 
       <SwiperGrid lastReleases={trendingNfts} translate={t} loaded={collectionLoaded} CardComponent={<Card />} title="Trending NFTs" />

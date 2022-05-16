@@ -8,12 +8,12 @@ import { BannerSlide } from "./BannerSlide";
 import "swiper/css";
 import "swiper/css/effect-fade";
 
-export const FeaturedSlider = ({ featured, loaded }) => {
+export const FeaturedSlider = ({ featured, loaded, collectionMap }) => {
   const [swiper, setSwiper] = useState(null);
 
   const sliderOptions = featured.map((f) => (
     <SwiperSlide key={f.id}>
-      <BannerSlide id={f.id} name={f.name} category={f.category_name} image={f.featured_url} thumbnail={f.thumbnail_url} p2e={f.is_play2earn} />
+      <BannerSlide id={f.id} name={collectionMap[f.id].name} category={f.category_name} image={f.featured_url} thumbnail={f.thumbnail_url} p2e={f.is_play2earn} />
     </SwiperSlide>
   ));
 
@@ -32,7 +32,7 @@ export const FeaturedSlider = ({ featured, loaded }) => {
       <Box pos={"relative"} zIndex={1} px={{ sm: 3 }} mt={{ base: 3, xl: "-3.5rem" }} pointerEvents={"none"}>
         <Flex justifyContent={"center"} maxW={"952px"} mx={"auto"} className="space-x">
           {loaded ? (
-            <FeaturedSlide featured={featured} swiper={swiper} />
+            <FeaturedSlide featured={featured} collectionMap={collectionMap} swiper={swiper} />
           ) : (
             <Skeleton
               p={0}

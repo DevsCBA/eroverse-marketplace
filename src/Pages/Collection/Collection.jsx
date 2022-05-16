@@ -21,23 +21,17 @@ export const Collection = () => {
   const { info} = useSelector((state) => state.collection);
   const { wallet, network} = useSelector((state) => state.wallet);
 
-  const { last_release, featured } = useSelector((state) => state.games);
   useEffect(() => {
     dispatch(collectionInfoLoading(parseInt(id || 1)));
   }, [dispatch,wallet,network, id]);
-  useEffect(() => {
-    dispatch(homeStartLoading());
-  }, [dispatch]);
-  useEffect(()=>{
-    let name = featured[parseInt(id) -1]?.name
-    setCollectionName(name)
-  },[featured,id])
+
+
 
   return (
     <>
-      <CollectionHeader featured={null} loaded={false} info={info} collectionName={collectionName}  />
+      <CollectionHeader featured={null} loaded={false} info={info} />
       <Box mt={{ base: "20%", md: "8%" }}>
-        <RegularGrid collectionId={id || 1} lastReleases={last_release} loaded={false}  title="NFTs" info={info} CardComponent={<Card />} />
+        <RegularGrid collectionId={id || 1} lastReleases={[0]} loaded={false}  title="NFTs" info={info} CardComponent={<Card />} />
       </Box>
     </>
   );

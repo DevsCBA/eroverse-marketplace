@@ -27,8 +27,9 @@ async function getNFT(collectionId,tokenId) {
 
 
 export const collectionInfoLoading = (id) => {
-	let collectionContact = collection_contract_map[id].address;
-	let collectionIPFS = collection_contract_map[id].ipfs
+	const collectionContact = collection_contract_map[id].address,
+		collectionIPFS = collection_contract_map[id].ipfs,
+		collectionName = collection_contract_map[id].name;
 	return async (dispatch) => {
 		let wallet = await store
 			.getState().wallet;
@@ -43,23 +44,23 @@ export const collectionInfoLoading = (id) => {
 		let onsaleItems = await wallet.contract.fetchContractsOnSaleItems(collectionContact);
          let floarPrice = null, nfts = [],  nftView = {}
 		 if (onsaleItems.length > 0) {
-                    var floorPrice = parseInt(onsaleItems[0][4]);
-                    for (var i = 0; i < onsaleItems.length; i++) {
-                        if (parseInt(onsaleItems[i][4]) < floorPrice) {
-                            floorPrice = parseInt(onsaleItems[i][4]);
-                        }
-                        let nft = await getNFT(id,parseInt(onsaleItems[i][2]),onsaleItems[i][1],onsaleItems[i][0],onsaleItems[i][3],onsaleItems[i][4]);
-						let bnbPrice = await ethers.utils.formatEther(parseInt(onsaleItems[i][4]).toString());
-                        nft.price = bnbPrice;
-						nfts.push(nft);
-						nftView[parseInt(onsaleItems[i][2])] = {type:nft.type,createdBy:'Eroverse',name:nft.name, category: nft.category,thumbnail_url:nft.thumbnail_url, tokenId:parseInt(onsaleItems[i][2]), nftContract:onsaleItems[i][1], itemId:parseInt(onsaleItems[i][0]), seller:onsaleItems[i][3], price:bnbPrice}
-                    }
-                    var bnbFloor = await ethers.utils.formatEther(floorPrice.toString());
-                    floarPrice = bnbFloor.toString() + 'BNB';
+			var floorPrice = parseInt(onsaleItems[0][4]);
+			for (var i = 0; i < onsaleItems.length; i++) {
+				if (parseInt(onsaleItems[i][4]) < floorPrice) {
+					floorPrice = parseInt(onsaleItems[i][4]);
+				}
+				let nft = await getNFT(id,parseInt(onsaleItems[i][2]),onsaleItems[i][1],onsaleItems[i][0],onsaleItems[i][3],onsaleItems[i][4]);
+				let bnbPrice = await ethers.utils.formatEther(parseInt(onsaleItems[i][4]).toString());
+				nft.price = bnbPrice;
+				nfts.push(nft);
+				nftView[parseInt(onsaleItems[i][2])] = {type:nft.type,createdBy:'Eroverse',name:nft.name, category: nft.category,thumbnail_url:nft.thumbnail_url, tokenId:parseInt(onsaleItems[i][2]), nftContract:onsaleItems[i][1], itemId:parseInt(onsaleItems[i][0]), seller:onsaleItems[i][3], price:bnbPrice}
+			}
+			var bnbFloor = await ethers.utils.formatEther(floorPrice.toString());
+				floarPrice = bnbFloor.toString() + 'BNB';
                     //document.getElementById('floor').innerHTML = bnbFloor.toString() + 'BNB';
 		}
 
-			let data = {'contractAddress':collectionContact,'total': '100', royalty:royalty, onsaleItems:onsaleItems, floarPrice:floarPrice,nfts:nfts,nftView};
+			let data = {'contractAddress':collectionContact, collectionName,'total': '100', royalty:royalty, onsaleItems:onsaleItems, floarPrice:floarPrice,nfts:nfts,nftView};
 			//console.log("---data---",data)
 		 	dispatch(collectionInfoLoaded(data));
 		}

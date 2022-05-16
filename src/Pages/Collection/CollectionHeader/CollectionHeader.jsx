@@ -3,7 +3,7 @@ import collection_banner from "../../../Assets/Images/collection_banner.png";
 import LogoBadge from "../../../Components/LogoBadge";
 import bc_address_icon from "../../../Assets/Images/bc_address_icon.png";
 import { DashboardCard } from "../../../Components/Cards/DashboardCard";
-export const CollectionHeader = ({info, collectionName}) => {
+export const CollectionHeader = ({info}) => {
   const bc_address_logo_size = "20px";
   return (
     <>
@@ -18,7 +18,7 @@ export const CollectionHeader = ({info, collectionName}) => {
             <Box pl={{ base: "6", xl: "16" }}>
               <LogoBadge />
               <Text variant={"bold"} fontSize={{ base: "2xl", md: "26px", xl: "4xl" }} color={"title"} py={{ base: 2, sm: 0 }}>
-                {collectionName ||  'Celeb Love 1: Megan Rain'}
+                {info.collectionName ||  'Celeb Love 1: Megan Rain'}
               </Text>
 
               <Flex>

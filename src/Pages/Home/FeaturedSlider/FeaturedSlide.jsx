@@ -85,7 +85,7 @@ export const FeaturedSlide = (props) => {
           {isDesktop && (
             <Box pos={"absolute"} transform={"translate(-50%, 10%)"} bottom={"10%"} left={"50%"} w={"full"}>
               <Text variant={"bold"} textAlign={"center"} fontSize={"lg"} color={"title"} lineHeight={1.2}>
-                {f.name}
+                {props.collectionMap[f.id].name}
               </Text>
             </Box>
           )}
