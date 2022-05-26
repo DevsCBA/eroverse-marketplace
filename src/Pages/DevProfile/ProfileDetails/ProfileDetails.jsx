@@ -33,8 +33,8 @@ export const ProfileDetails = () => {
               { id: 2, name: "telegram", logo_url: telegram },
               { id: 3, name: "discord", logo_url: discord },
               { id: 4, name: "patreon", logo_url: patreon },
-            ].map((item) => (
-              <Image src={item.logo_url} p={"10px"} />
+            ].map((item, id) => (
+              <Image key={id} src={item.logo_url} p={"10px"} />
             ))}
           </Flex>
         </Flex>

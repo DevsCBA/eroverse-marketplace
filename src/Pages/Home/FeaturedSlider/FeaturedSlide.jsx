@@ -45,7 +45,8 @@ export const FeaturedSlide = (props) => {
           _hover={{
             bgColor: "rgba(33,13,66, 0)",
             borderColor: "secondary",
-            filter: "drop-shadow(0px 4px 7px var(--ero-colors-secondaryAlpha-700))",
+            filter:
+              "drop-shadow(0px 4px 7px var(--ero-colors-secondaryAlpha-700))",
             "--opacity": 0,
           }}
           _after={{
@@ -79,13 +80,43 @@ export const FeaturedSlide = (props) => {
               top: 0,
             }}
           >
-            <Image fallback={<Skeleton h={"full"} w={"full"} borderRadius={"0.5rem"} objectFit={"cover"} objectPosition={"top"} position={"absolute"} />} src={f.thumbnail_url} alt={f.name} h={"full"} objectFit={"cover"} objectPosition={"top"} position={"absolute"} w={"full"} />
+            <Image
+              fallback={
+                <Skeleton
+                  h={"full"}
+                  w={"full"}
+                  borderRadius={"0.5rem"}
+                  objectFit={"cover"}
+                  objectPosition={"top"}
+                  position={"absolute"}
+                />
+              }
+              src={f.thumbnail_url}
+              alt={f.name}
+              h={"full"}
+              objectFit={"cover"}
+              objectPosition={"top"}
+              position={"absolute"}
+              w={"full"}
+            />
           </Button>
 
           {isDesktop && (
-            <Box pos={"absolute"} transform={"translate(-50%, 10%)"} bottom={"10%"} left={"50%"} w={"full"}>
-              <Text variant={"bold"} textAlign={"center"} fontSize={"lg"} color={"title"} lineHeight={1.2}>
-                {props.collectionMap[f.id].name}
+            <Box
+              pos={"absolute"}
+              transform={"translate(-50%, 10%)"}
+              bottom={"10%"}
+              left={"50%"}
+              w={"full"}
+            >
+              <Text
+                variant={"bold"}
+                textAlign={"center"}
+                fontSize={"lg"}
+                color={"title"}
+                lineHeight={1.2}
+              >
+                {props.collectionMap[index].name}
               </Text>
             </Box>
           )}

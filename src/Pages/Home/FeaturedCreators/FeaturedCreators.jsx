@@ -16,7 +16,7 @@ export const FeaturedCreators = ({ lastReleases, translate: t, loaded }) => {
     "3xl": isLessThan4 ? "repeat(3, 1fr)" : "repeat(4, 1fr)",
   });
 
-  const sliderOptions = lastReleases.map((element) => <CreatorCard id={element.id} name={element.name} category={element.category_name} thumbnail={element.thumbnail_url} p2e={element.is_play2earn} />);
+  const sliderOptions = lastReleases.map((element, slide) => <CreatorCard key={slide} id={element.id} name={element.name} category={element.category_name} thumbnail={element.thumbnail_url} p2e={element.is_play2earn} />);
 
   const loadingSlides = [1, 2, 3, 4].map((slide, index) => <CreatorCard key={slide} id={index} name={""} category={""} thumbnail={""} />);
 

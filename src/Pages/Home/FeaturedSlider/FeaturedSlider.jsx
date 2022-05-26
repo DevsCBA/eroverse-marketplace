@@ -11,28 +11,66 @@ import "swiper/css/effect-fade";
 export const FeaturedSlider = ({ featured, loaded, collectionMap }) => {
   const [swiper, setSwiper] = useState(null);
 
-  const sliderOptions = featured.map((f) => (
+  const newArr = Object.values(collectionMap);
+
+  const sliderOptions = featured.map((f, index) => (
     <SwiperSlide key={f.id}>
-      <BannerSlide id={f.id} name={collectionMap[f.id].name} category={f.category_name} image={f.featured_url} thumbnail={f.thumbnail_url} p2e={f.is_play2earn} />
+      {/* <BannerSlide id={f.id} name={collectionMap[f.id].name} category={f.category_name} image={f.featured_url} thumbnail={f.thumbnail_url} p2e={f.is_play2earn} /> */}
+      <BannerSlide
+        id={f.id}
+        name={newArr[index].name}
+        category={f.category_name}
+        image={f.featured_url}
+        thumbnail={f.thumbnail_url}
+        p2e={f.is_play2earn}
+      />
     </SwiperSlide>
   ));
 
   return (
     <>
-      <Swiper slidesPerView={1} effect={"fade"} allowTouchMove={false} modules={[EffectFade]} onSwiper={setSwiper}>
+      <Swiper
+        slidesPerView={1}
+        effect={"fade"}
+        allowTouchMove={false}
+        modules={[EffectFade]}
+        onSwiper={setSwiper}
+      >
         {loaded ? (
           sliderOptions
         ) : (
           <SwiperSlide>
-            <BannerSlide id={0} name={""} category={""} image={""} thumbnail={""} p2e={""} />
+            <BannerSlide
+              id={0}
+              name={""}
+              category={""}
+              image={""}
+              thumbnail={""}
+              p2e={""}
+            />
           </SwiperSlide>
         )}
       </Swiper>
 
-      <Box pos={"relative"} zIndex={1} px={{ sm: 3 }} mt={{ base: 3, xl: "-3.5rem" }} pointerEvents={"none"}>
-        <Flex justifyContent={"center"} maxW={"952px"} mx={"auto"} className="space-x">
+      <Box
+        pos={"relative"}
+        zIndex={1}
+        px={{ sm: 3 }}
+        mt={{ base: 3, xl: "-3.5rem" }}
+        pointerEvents={"none"}
+      >
+        <Flex
+          justifyContent={"center"}
+          maxW={"952px"}
+          mx={"auto"}
+          className="space-x"
+        >
           {loaded ? (
-            <FeaturedSlide featured={featured} collectionMap={collectionMap} swiper={swiper} />
+            <FeaturedSlide
+              featured={featured}
+              collectionMap={newArr}
+              swiper={swiper}
+            />
           ) : (
             <Skeleton
               p={0}
