@@ -92,7 +92,7 @@ export const collectionInfoLoading = (id) => {
 
       let data = {
         contractAddress: collectionContact,
-        collectionName,
+        collectionName: collectionName,
         total: "100",
         royalty: royalty,
         onsaleItems: onsaleItems,
