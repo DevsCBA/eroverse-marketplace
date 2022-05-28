@@ -11,6 +11,7 @@ import "../Home/homeScreen.css";
 
 import { collectionInfoLoading } from "../../actions/collection";
 import { useParams } from "react-router-dom";
+import {AddressCollectionMap} from "../../constant/marketPlace";
 
 export const Collection = () => {
   const [collectionName, setCollectionName] = useState(null);
@@ -22,22 +23,29 @@ export const Collection = () => {
 
   useEffect(() => {
     dispatch(collectionInfoLoading(parseInt(id || 1)));
-    console.log(info);
   }, [dispatch, wallet, network, id]);
+
+  const isValidCollection = (item) =>{
+    if(!item?.contractAddress){
+      return  false
+    }
+    return id == AddressCollectionMap[item.contractAddress]
+  }
 
   return (
     <>
-      <CollectionHeader featured={null} loaded={false} info={info} />
-      <Box mt={{ base: "20%", md: "8%" }}>
-        <RegularGrid
-          collectionId={id || 1}
-          lastReleases={[0]}
-          loaded={false}
-          title="NFTs"
-          info={info}
-          CardComponent={<Card />}
-        />
-      </Box>
+      {isValidCollection(info) && <CollectionHeader featured={null} loaded={false} info={info} />}
+      {isValidCollection(info) && <Box mt={{ base: "20%", md: "8%" }}>
+          <RegularGrid
+            collectionId={id || 1}
+            lastReleases={[0]}
+            loaded={false}
+            title="NFTs"
+            info={info}
+            CardComponent={<Card />}
+          />
+        </Box>
+      }
     </>
   );
 };
