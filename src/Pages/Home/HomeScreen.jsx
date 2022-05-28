@@ -40,9 +40,9 @@ export const HomeScreen = () => {
 
       <RegularGrid  showCollection={true} collectionId={featuredCollections[0]?.collectionId} lastReleases = {last_release} info={featuredCollections[0]}  translate={t} loaded={collectionLoaded} title="Featured Collection" CardComponent={<Card/>} />
 
-      <Box mt={{ base: 9, md: 12, xl: 20 }} mx={{ base: "4", md: "7", xl: "16", "2xl": "91px" }}>
+      {/*<Box mt={{ base: 9, md: 12, xl: 20 }} mx={{ base: "4", md: "7", xl: "16", "2xl": "91px" }}>
         <FeaturedCreators lastReleases={mockDataFeaturedCreators} translate={t} loaded={loaded} />
-      </Box>
+      </Box>*/}
     </>
   );
 };
