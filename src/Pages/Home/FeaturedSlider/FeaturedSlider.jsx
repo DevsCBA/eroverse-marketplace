@@ -17,7 +17,7 @@ export const FeaturedSlider = ({ featured, loaded, collectionMap }) => {
     <SwiperSlide key={f.id}>
       {/* <BannerSlide id={f.id} name={collectionMap[f.id].name} category={f.category_name} image={f.featured_url} thumbnail={f.thumbnail_url} p2e={f.is_play2earn} /> */}
       <BannerSlide
-        id={f.id}
+        id={index+1}
         name={newArr[index].name}
         category={f.category_name}
         image={f.featured_url}

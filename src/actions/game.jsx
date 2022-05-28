@@ -53,6 +53,8 @@ export const homeStartLoading = () => {
 				features.splice(2,0,extraCollection);
 				console.log("featuresin actions",features)
 
+				console.log("===features---",features);
+
 				dispatch(homeLoadedFeatured(features));
 			})
 			.catch((error) => console.log('error', error));
