@@ -4,7 +4,7 @@ import { store } from "../store/store";
 import { ethers } from "ethers";
 import {
   AddressCollectionMap,
-  collection_contract_map,
+  collection_contract_map, marketplaceContract, contractAddresses,
   nftContract,
   nftURL,
 } from "../constant/marketPlace";
@@ -201,7 +201,8 @@ export const featuredNftLoading = () => {
   };
 };
 
-const collectionInfoLoaded = (data) => ({
+
+export const collectionInfoLoaded = (data) => ({
   type: types.collectionInfo,
   payload: data,
 });

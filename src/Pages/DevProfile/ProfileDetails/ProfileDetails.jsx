@@ -6,8 +6,9 @@ import discord from "../../../Assets/Images/discord.png";
 import patreon from "../../../Assets/Images/patreon.png";
 import { DashboardCard } from "../../../Components/Cards/DashboardCard";
 
-export const ProfileDetails = () => {
+export const ProfileDetails = ({account, profile}) => {
   const bc_address_logo_size = "20px";
+  const info = {total:profile.total, nfts:new Array(profile.onSaleTotal)}
 
   return (
     <>
@@ -20,7 +21,7 @@ export const ProfileDetails = () => {
           <Flex>
             <Image src={bc_address_icon} w={bc_address_logo_size} h={bc_address_logo_size} mx={1} />
             <Text fontSize={{ base: "15px", md: "15px", xl: "md" }} color={"title"}>
-              0xbd35...d6d9
+              {account}
             </Text>
           </Flex>
 
@@ -39,7 +40,7 @@ export const ProfileDetails = () => {
           </Flex>
         </Flex>
         <Box pt={{ base: "12px", md: "36px" }} px={{ base: "5%", md: "25%" }}>
-          <DashboardCard />
+          <DashboardCard info={info}/>
         </Box>
       </Box>
     </>

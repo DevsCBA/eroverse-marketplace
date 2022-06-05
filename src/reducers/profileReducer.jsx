@@ -3,6 +3,7 @@ import { types } from "../types/types";
 const initialState = {
     rewards: null,
     history: [],
+    profile:{nfts:[], onSaleTotal:0, total:0}
 }
 
 export const profileReducer = ( state = initialState, action ) => {
@@ -12,7 +13,7 @@ export const profileReducer = ( state = initialState, action ) => {
         case types.profileLoaded:
             return {
                 ...state,
-                ...action.payload
+                profile: {...action.payload}
             }
 
         case types.profileHistoryLoaded:

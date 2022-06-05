@@ -8,6 +8,14 @@ export const  AddressCollectionMap = {
     "0x1846cB4e829C5d5c6B4ef7A9acc90148eC8292FC":5
 }
 
+export const contractAddresses = [
+    "0x7d1dcC9f99888f90cFBeB22E12f07249ecd65162",
+    "0x5dade0BCa8E052A6cC4FdBE6280E0dc19073038A",
+    "0x940cB7Fe02e02a09500485F90eA58332A0DD87c8",
+    "0x9f74036E7b05565C6052805a30c41889695E7d70",
+    "0x1846cB4e829C5d5c6B4ef7A9acc90148eC8292FC"
+]
+
 export  const nftContract = '0x35D8777D349c20fC3147C548cd9A25a684644852';
 export  const nftURL = 'https://ipfs.io/ipfs/QmdgpkkxCAz8oSr5LMp7FZUYn4ifqBJDH5iyYZfmjRewNR/';
 
