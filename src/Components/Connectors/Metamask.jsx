@@ -136,7 +136,7 @@ const Metamask = () => {
 
 		async function connectMyWallet() {
 			await connectWalletHandler();
-			await getWalletTokens();
+			//await getWalletTokens();
 		}
 
 		if (walletConnected === 'true') {
