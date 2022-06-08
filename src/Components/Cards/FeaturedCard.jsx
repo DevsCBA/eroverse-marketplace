@@ -56,8 +56,9 @@ export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name
               <video  key={thumbnail} autoPlay  loop>
                   <source src={thumbnail} type="video/mp4"/>
               </video>
+
               <Flex direction={"column"} width={"100%"}>
-                  {parseInt(price) > 0 && <Text
+                  {price > 0 && <Text
                       variant={gameNameWeight}
                       color={"title"}
                       fontSize={{
@@ -70,7 +71,7 @@ export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name
                   >
                       {`${price} BNB` }
                   </Text>}
-                  <button> {parseInt(price) > 0 ? 'Cancel Sale' : 'Sell NFT'} </button>
+                  <button> {price > 0 ? 'Cancel Sale' : 'Sell NFT'} </button>
               </Flex>
             {/*{!p2e ? null : (
               <Box

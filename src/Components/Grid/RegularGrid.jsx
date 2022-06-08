@@ -6,10 +6,10 @@ import "swiper/css";
 export const RegularGrid = (props) => {
   const { lastReleases, translate: t, loaded, CardComponent, title, my, info={}, filterId, collectionId, showCollection,collections} = props;
   const mapArray = info?.nfts || collections || [];
-  const sliderOptions = mapArray.map((element) => {
+  const sliderOptions = mapArray.map((element, index) => {
     const { id, name, category_name, thumbnail_url, is_play2earn, price } = element || {};
     if(!filterId || filterId !==id){
-      return cloneElement(CardComponent, { key: element.id, collectionId:collectionId, showCollection,id: id, name: name, category: category_name, thumbnail: thumbnail_url, p2e: is_play2earn, p: 4, price:price });
+      return cloneElement(CardComponent, { key: element.id + index, collectionId:collectionId, showCollection,id: id, name: name, category: category_name, thumbnail: thumbnail_url, p2e: is_play2earn, p: 4, price:price });
     }
   });
 
