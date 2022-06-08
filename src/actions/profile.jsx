@@ -82,7 +82,7 @@ export const profileLoading = () => {
             dispatch(collectionInfoLoaded({}));
             return;
         }
-        let totalItems = 0, account =  "0x62412757075f4BDe3349487266771e706645478E"; //wallet?.wallet;
+        let totalItems = 0, account =  wallet?.wallet ; //"0x62412757075f4BDe3349487266771e706645478E"; //wallet?.wallet;
         let sellerItems = await wallet.contract.fetchSellersOnSaleItems(account);
         let balance;
         let count;
