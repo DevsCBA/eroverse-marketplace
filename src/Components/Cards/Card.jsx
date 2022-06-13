@@ -11,6 +11,18 @@ export const Card = ({ id, collectionId, showCollection, thumbnail, name, catego
     }
   return (
     <>
+    {/* <Box
+        ml={15}
+        mr={15}
+        mb={20}
+        width={{
+          base: "calc(100% - 30px)",
+          md: "calc(50% - 30px)",
+          lg: "calc(33.33% - 30px)",
+          xl: "calc(33.33% - 30px)",
+        }}
+        className="profil_list_block"
+      > */}
       <Link to={linkUrl} display={"block"} pos={"relative"}>
         <Flex direction={"column"} alignItems={"center"} p={p}>
           <Flex flexWrap="wrap">
@@ -138,6 +150,7 @@ export const Card = ({ id, collectionId, showCollection, thumbnail, name, catego
           </Flex>
         </Flex>
       </Link>
+      {/* </Box> */}
     </>
   );
 };

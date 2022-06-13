@@ -1,36 +1,72 @@
 .active-thumb {
-	--opacity: 0 !important;
-	border-color: var(--ero-colors-secondary) !important;
-	filter: drop-shadow(0px 4px 7px var(--ero-colors-secondaryAlpha-700));
+  --opacity: 0 !important;
+  border-color: var(--ero-colors-secondary) !important;
+  filter: drop-shadow(0px 4px 7px var(--ero-colors-secondaryAlpha-700));
 }
 
 div.active-thumb::after {
-	bottom: 0;
-	content: '';
-	left: 0;
-	opacity: 0.8;
-	position: 'absolute';
-	right: 0;
-	top: 0;
-	animation: widen 5s linear;
-	background-color: var(--ero-colors-primaryAlpha-500);
+  bottom: 0;
+  content: "";
+  left: 0;
+  opacity: 0.8;
+  position: "absolute";
+  right: 0;
+  top: 0;
+  animation: widen 5s linear;
+  background-color: var(--ero-colors-primaryAlpha-500);
 }
-@keyframes widen {
-	0% {
-		width: 0;
-	}
+.profile_list_title {
+  width: 97%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 
-	to {
-		width: 100%;
-	}
+@keyframes widen {
+  0% {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
 }
 
 .space-x > :not([hidden]) ~ :not([hidden]) {
-	margin-left: 1.5rem;
+  margin-left: 1.5rem;
 }
 
+@media screen and (min-width: 80em) {
+  .mt_dasktop_40 {
+    margin-top: 40px !important;
+  }
+  .profile_list_video {
+    height: 400px;
+    overflow: hidden;
+  }
+  .profile_list_video video {
+    height: 100%;
+  }
+}
+@media screen and (min-width: 80em) and (max-width: 87.5em) {
+  .profile_list_video {
+    height: 340px;
+    overflow: hidden;
+  }
+}
+@media screen and (min-width: 79em) and (max-width: 81.26em) {
+  .profil_list_block {
+    width: 29.6% !important;
+  }
+}
+@media screen and (min-width: 1600px) {
+  .profile_list_video {
+    height: 80%;
+    overflow: hidden;
+  }
+}
 @media screen and (max-width: 48em) {
-	.space-x > :not([hidden]) ~ :not([hidden]) {
-		margin-left: 0.375rem;
-	}
+  .space-x > :not([hidden]) ~ :not([hidden]) {
+    margin-left: 0.375rem;
+  }
 }
