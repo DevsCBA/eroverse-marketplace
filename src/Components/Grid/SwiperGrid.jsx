@@ -15,10 +15,11 @@ export const SwiperGrid = (props) => {
     "2xl": 16,
   });
 
+
   const sliderOptions = lastReleases.map((element,index) => (
-    <SwiperSlide key={index} style={{ display: "flex" }}>
+    <SwiperSlide key={index}>
       {React.cloneElement(CardComponent, { id: element.id, collectionId:element.collectionId, name: element.name, category: element.category_name, thumbnail: element.thumbnail_url, p2e: element.is_play2earn })}
-    </SwiperSlide>
+    </SwiperSlide>  
   ));
 
   const loadingSlides = [1, 2, 3, 4].map((slide, index) => <SwiperSlide key={index}>{React.cloneElement(CardComponent, { id: index, name: "", category: "", thumbnail: "" })}</SwiperSlide>);

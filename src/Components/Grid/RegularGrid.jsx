@@ -14,9 +14,36 @@ export const RegularGrid = (props) => {
   const sliderOptions = mapArray.map((element, index) => {
     const { id, name, category_name, thumbnail_url, is_play2earn, price } = element || {};
     if(!filterId || filterId !==id){
-      return cloneElement(CardComponent, { key: element.id + index, collectionId:collectionId, showCollection,id: id, name: name, category: category_name, thumbnail: thumbnail_url, p2e: is_play2earn, p: 4, price:price });
+      return (
+        <Box
+          ml={15}
+          mr={15}
+          mb={"35px"}
+          width={{
+            base: "calc(50% - 30px)",
+            md: "calc(50% - 30px)",
+            lg: "calc(33.33% - 30px)",
+            xl: "calc(33.33% - 30px)",
+          }}
+        >
+          {cloneElement(CardComponent, {
+            key: element.id + index,
+            collectionId: collectionId,
+            showCollection,
+            id: id,
+            name: name,
+            category: category_name,
+            thumbnail: thumbnail_url,
+            p2e: is_play2earn,
+            p: 4,
+            price: price,
+          })}{" "}
+        </Box>
+      );
     }
-  });
+  });  
+
+  
 
   const loadingSlides = [1, 2, 3, 4].map((slide, index) => cloneElement(CardComponent, { key: index, id: index, name: "", category: "", thumbnail: "" }));
 
@@ -38,14 +65,15 @@ setSpinnerState(true);
 }
   }, [walletState]);
 
+ 
+
 useEffect(() => {
   if(mapArray[0]!= undefined){
     setSpinnerState(false)
   }
 }, [mapArray]);
 
-  console.log("info", mapArray[0]);
-  console.log("first state", walletState);
+ 
   return (
     <>
       <Box
@@ -54,7 +82,12 @@ useEffect(() => {
       >
         {title && (
           <Flex justifyContent={"space-between"} alignItems={"center"}>
-            <Heading as="h2" fontSize={{ base: "xl", md: "3xl", xl: "4xl" }}>
+            <Heading
+              as="h2"
+              fontSize={{ base: "xl", md: "3xl", xl: "4xl" }}
+              mb={{ base: "22px", md: "40px", xl: "40px" }}
+              ml={{ base: "15px" }}
+            >
               {title}
             </Heading>
           </Flex>
@@ -85,10 +118,9 @@ useEffect(() => {
           )}
         </Center>
 
-        <Box style={{ display: "flex", flexWrap: "wrap" }}>
-          {sliderOptions}
+        <Box style={{ display: "flex", flexWrap: "wrap" }}>{sliderOptions}
         </Box>
-      </Box>
+        </Box>
     </>
   );
 };

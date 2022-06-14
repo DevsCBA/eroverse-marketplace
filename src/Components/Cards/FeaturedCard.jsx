@@ -13,11 +13,10 @@ export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name
     xl: "lg",
   });
 
-  console.log("thumbnail", thumbnail);
 
   return (
     <>
-      <Box
+      {/* <Box
         ml={15}
         mr={15}
         mb={20}
@@ -28,7 +27,7 @@ export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name
           xl: "calc(33.33% - 30px)",
         }}
         className="profil_list_block"
-      >
+      > */}
         <Link to={`games/${id}`} pos={"relative"}>
           {/* <Flex justifyContent={"center"}> */}
 
@@ -148,7 +147,7 @@ export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name
 
           {/* </Flex> */}
         </Link>
-      </Box>
+      {/* </Box> */}
     </>
   );
 };
