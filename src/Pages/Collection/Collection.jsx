@@ -32,6 +32,7 @@ export const Collection = () => {
     return id == AddressCollectionMap[item.contractAddress]
   }
 
+
   return (
     <>
       {isValidCollection(info) && <CollectionHeader featured={null} loaded={false} info={info} />}

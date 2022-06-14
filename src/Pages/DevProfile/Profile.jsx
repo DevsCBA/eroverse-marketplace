@@ -56,7 +56,7 @@ export const Profile = () => {
       <ProfileDetails  account={wallet} profile={profile}/>
       <Box my={{ base: "40px", md: "60px", lg: "60px", "2xl": "80px" }}>
        {/* <Header></Header>*/}
-        <RegularGrid lastReleases={mockDataForFeaturedCollection} translate={t} info={profile} loaded={loaded} CardComponent={<FeaturedCard />} my={0} />
+        <RegularGrid lastReleases={mockDataForFeaturedCollection} translate={t} info={profile} loaded={loaded} CardComponent={<FeaturedCard />} my={0} showLoading={true}/>
       </Box>
     </>
   );

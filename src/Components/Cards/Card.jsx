@@ -11,8 +11,20 @@ export const Card = ({ id, collectionId, showCollection, thumbnail, name, catego
     }
   return (
     <>
+      {/* <Box
+        ml={15}
+        mr={15}
+        mb={20}
+        width={{
+          base: "calc(100% - 30px)",
+          md: "calc(50% - 30px)",
+          lg: "calc(33.33% - 30px)",
+          xl: "calc(33.33% - 30px)",
+        }}
+        className="profil_list_block"
+      > */}
       <Link to={linkUrl} display={"block"} pos={"relative"}>
-        <Flex direction={"column"} alignItems={"center"} p={p}>
+        <Flex direction={"column"} alignItems={"center"}>
           <Flex flexWrap="wrap">
             {/*<Image
               fallback={<Skeleton h={"full"} w={"full"} />}
@@ -27,9 +39,11 @@ export const Card = ({ id, collectionId, showCollection, thumbnail, name, catego
               }}
             />
 */}
-              <video  key={thumbnail} autoPlay  loop>
-                  <source src={thumbnail} type="video/mp4"/>
+            <div className="profile_list_video">
+              <video key={thumbnail} autoPlay loop>
+                <source src={thumbnail} type="video/mp4" />
               </video>
+            </div>
             {p2e !== 1 ? null : (
               <Box
                 pos={"absolute"}
@@ -44,7 +58,13 @@ export const Card = ({ id, collectionId, showCollection, thumbnail, name, catego
                 px={3}
                 pt={3}
               >
-                <Flex direction={"column"} justifyContent={"flex-end"} alignItems={"flex-end"} mx={"auto"} h={"full"}>
+                <Flex
+                  direction={"column"}
+                  justifyContent={"flex-end"}
+                  alignItems={"flex-end"}
+                  mx={"auto"}
+                  h={"full"}
+                >
                   <Badge variant={"p2e"} fontSize={{ base: "xs", md: "lg" }}>
                     P2E
                   </Badge>
@@ -63,7 +83,7 @@ export const Card = ({ id, collectionId, showCollection, thumbnail, name, catego
             }}
           >
             {name !== "" ? (
-              <Flex direction={"column"}>
+              <Flex direction={"column"} width={"100%"}>
                 <Text
                   variant={"bold"}
                   color={"title"}
@@ -72,6 +92,7 @@ export const Card = ({ id, collectionId, showCollection, thumbnail, name, catego
                     md: "2xl",
                   }}
                   lineHeight={1}
+                  className="profile_list_title"
                 >
                   {name}
                 </Text>
@@ -86,31 +107,37 @@ export const Card = ({ id, collectionId, showCollection, thumbnail, name, catego
                 >
                   {category}
                 </Text>
-                  <Flex flexDirection="row" w={{ base: "100%" }} px={{ base: "0px", md: "0px" }} py={{ base: "5px", md: 0 }} mt={{ base: "5px", md: "6px" }}>
-                      <Text
-                          fontSize={{
-                              base: "xs",
-                              md: "lg",
-                              xl: "xl",
-                          }}
-                          lineHeight={1.2}
-                          mr={1}
-                      >
-                          {'Price'}
-                      </Text>
-                      <Text
-                          fontSize={{
-                              base: "xs",
-                              md: "lg",
-                              xl: "xl",
-                          }}
-                          lineHeight={1.2}
-                          color={"white"}
-                          variant={"liter"}
-                      >
-                          {price || 1.2} BNB
-                      </Text>
-                  </Flex>
+                <Flex
+                  flexDirection="row"
+                  w={{ base: "100%" }}
+                  px={{ base: "0px", md: "0px" }}
+                  py={{ base: "5px", md: 0 }}
+                  mt={{ base: "5px", md: "6px" }}
+                >
+                  <Text
+                    fontSize={{
+                      base: "xs",
+                      md: "lg",
+                      xl: "xl",
+                    }}
+                    lineHeight={1.2}
+                    mr={1}
+                  >
+                    {"Price"}
+                  </Text>
+                  <Text
+                    fontSize={{
+                      base: "xs",
+                      md: "lg",
+                      xl: "xl",
+                    }}
+                    lineHeight={1.2}
+                    color={"white"}
+                    variant={"liter"}
+                  >
+                    {price || 1.2} BNB
+                  </Text>
+                </Flex>
                 <Button
                   variant={"primary"}
                   display={{
@@ -134,10 +161,10 @@ export const Card = ({ id, collectionId, showCollection, thumbnail, name, catego
             ) : (
               <SkeletonText noOfLines={2} spacing="4" w={"full"} pr={5} />
             )}
-
           </Flex>
         </Flex>
       </Link>
+      {/* </Box> */}
     </>
   );
 };
