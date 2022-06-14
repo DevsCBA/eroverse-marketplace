@@ -1,21 +1,48 @@
-import { Box, Flex, Heading, useBreakpointValue, Text, Suspense, Center, Spinner  } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  useBreakpointValue,
+  Text,
+  Suspense,
+  Center,
+  Spinner,
+} from "@chakra-ui/react";
 import React, { cloneElement } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-
 import "swiper/css";
 
 export const RegularGrid = (props) => {
-  const { lastReleases, translate: t, loaded, CardComponent, title, my, info={}, filterId, collectionId, showCollection,collections} = props;
-  const [SpinnerState, setSpinnerState]=useState(false)
-  const walletState = useSelector(state=>state.wallet.connected)
+  const {
+    lastReleases,
+    translate: t,
+    loaded,
+    CardComponent,
+    title,
+    my,
+    info = {},
+    filterId,
+    collectionId,
+    showCollection,
+    collections,
+    showLoading,
+  } = props;
+  const [SpinnerState, setSpinnerState] = useState(false);
+  const reduxState = useSelector((state) => state);
+  const walletState = reduxState.wallet.connected;
+  const totalnftbyRedux = reduxState.profile.profile.total;
+  const [showNotFound, setShowNotFound] = useState("");
+
   const mapArray = info?.nfts || collections || [];
   const sliderOptions = mapArray.map((element, index) => {
-    const { id, name, category_name, thumbnail_url, is_play2earn, price } = element || {};
-    if(!filterId || filterId !==id){
+    const { id, name, category_name, thumbnail_url, is_play2earn, price } =
+      element || {};
+    if (!filterId || filterId !== id) {
       return (
         <Box
+          key={index}
           ml={15}
           mr={15}
           mb={"35px"}
@@ -41,11 +68,18 @@ export const RegularGrid = (props) => {
         </Box>
       );
     }
-  });  
+  });
 
-  
 
-  const loadingSlides = [1, 2, 3, 4].map((slide, index) => cloneElement(CardComponent, { key: index, id: index, name: "", category: "", thumbnail: "" }));
+  const loadingSlides = [1, 2, 3, 4].map((slide, index) =>
+    cloneElement(CardComponent, {
+      key: index,
+      id: index,
+      name: "",
+      category: "",
+      thumbnail: "",
+    })
+  );
 
   const isLessThan4 = lastReleases.length < 4;
   const DIMENSION = useBreakpointValue({
@@ -58,22 +92,27 @@ export const RegularGrid = (props) => {
     "2xl": isLessThan4 ? "repeat(3, 1fr)" : "repeat(3, 1fr)",
     "3xl": isLessThan4 ? "repeat(3, 1fr)" : "repeat(3, 1fr)",
   });
-  
+
   useEffect(() => {
-if(walletState){
-setSpinnerState(true);
-}
-  }, [walletState]);
+    if (walletState && totalnftbyRedux == 0) {
+      setSpinnerState(true);
+    }
+    if (walletState && totalnftbyRedux == null) {
+      setSpinnerState(false);
+      setShowNotFound("Not Found any NFT");
+    }
+    if (!walletState) {
+      setShowNotFound("");
+    }
+  }, [walletState, totalnftbyRedux]);
 
- 
+  useEffect(() => {
+    if (mapArray[0] != undefined) {
+      setSpinnerState(false);
+    }
+  }, [mapArray]);
 
-useEffect(() => {
-  if(mapArray[0]!= undefined){
-    setSpinnerState(false)
-  }
-}, [mapArray]);
 
- 
   return (
     <>
       <Box
@@ -109,6 +148,7 @@ useEffect(() => {
         ></Suspense> */}
         {/* {SpinnerState && <Spinner size="xl" color="primary" />} */}
         <Center>
+          {showLoading && showNotFound}
           {SpinnerState && (
             <Spinner
               size="xl"
@@ -118,9 +158,8 @@ useEffect(() => {
           )}
         </Center>
 
-        <Box style={{ display: "flex", flexWrap: "wrap" }}>{sliderOptions}
-        </Box>
-        </Box>
+        <Box style={{ display: "flex", flexWrap: "wrap" }}>{sliderOptions}</Box>
+      </Box>
     </>
   );
 };

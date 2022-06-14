@@ -86,7 +86,7 @@ export const profileLoading = () => {
       return;
     }
     let totalItems = 0,
-      account = "0x62412757075f4BDe3349487266771e706645478E"; //wallet?.wallet;
+      account = wallet?.wallet; //"0x62412757075f4BDe3349487266771e706645478E"
     let sellerItems = await wallet.contract.fetchSellersOnSaleItems(account);
     let balance;
     let count;
@@ -98,6 +98,7 @@ export const profileLoading = () => {
     const provider = new ethers.providers.Web3Provider(window?.ethereum);
     const signer = provider.getSigner();
     let nfts = [];
+    let foundCount=0
 
     for (let i = 0; i < contractAddresses.length; i++) {
       let nftContract = new ethers.Contract(
@@ -106,7 +107,11 @@ export const profileLoading = () => {
         signer
       );
       balance = parseInt(await nftContract.balanceOf(account));
+      foundCount = balance;
       count = 0;
+      if(balance==0){
+        totalItems= null
+      }
       while (balance > 0) {
         count += 1;
         //try {
@@ -150,7 +155,7 @@ export const profileLoading = () => {
       }
     }
 
-    let obj = { total: totalItems, onSaleTotal: sellerItems.length, nfts };
+    let obj = { total: totalItems, onSaleTotal: sellerItems.length, nfts, foundNFT: foundCount };
     dispatch(profileLoaded(obj));
   };
 };
