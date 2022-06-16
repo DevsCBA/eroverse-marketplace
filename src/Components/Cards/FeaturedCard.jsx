@@ -2,9 +2,14 @@ import { Box, Flex, Image, Skeleton,Button, Text, Input, Badge, useBreakpointVal
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import LogoBadge from "../LogoBadge";
-import {marketplaceContract} from '../../constant/marketPlace'
+import {marketplaceContract} from '../../constant/marketPlace';
+import marketplaceAbi from '../../ABIs/marketplaceAbi.json'
 import { useDispatch, useSelector } from "react-redux";
 import {ethers} from "ethers";
+import Web3 from 'web3/dist/web3.min.js';
+
+window.web3 = new Web3(window.ethereum);
+
 
 
 
@@ -18,28 +23,36 @@ export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name
     xl: "lg",
   });
 
-  const [nftPrice, setNftPrice] = useState(0)
+
+  const [nftPrice, setNftPrice] = useState(null);
 
   const onChange = (e)=>{
       setNftPrice(e.target.value);
   }
   const onButtonClick = async(type)=>{
       let account = wallet?.wallet;
+      let tokenId = item.tokenId;
+      const nftContractAddress = item.nftContractAddress;
+      const web3Marketplacecontract =  await new window.web3.eth.Contract(marketplaceAbi, marketplaceContract);
       if(type === 'Sell'){
-          !nftPrice && alert('No Price Specified');
-          return;
-          let price_ = ethers.utils.formatEther(nftPrice)
-          const approvedList = await item.nftContract.getApproved(id);
+          let tokenId = id;
+          if(!nftPrice ||  !parseFloat(nftPrice)){
+              alert('No Price Specified');
+              return;
+          }
+          const price_ = await Web3.utils.toWei(nftPrice)
+          const approvedList = await item.nftContract.methods.getApproved(tokenId).call();
+
           if (!approvedList.includes(marketplaceContract)) {
-              const gas_ = await item.nftContract.approve(marketplaceContract, id).estimateGas({ from: account }).catch((e) => {
+              const gas_ = await item.nftContract.methods.approve(marketplaceContract, tokenId).estimateGas({ from: account }).catch((e) => {
                   alert(e.message);
               });
               if (gas_) {
-                  const method = await item.nftContract.approve(item.marketplaceContract, id).send({ from: account, gas: gas_  }).on('receipt', async function(receipt) {
-                      let gas2_ = await wallet.contract.createMarketplaceItem(item.nftContractAddress, id, price_).estimateGas({ from: account }).catch((e) => {
+                  const method = await item.nftContract.methods.approve(marketplaceContract, tokenId).send({ from: account, gas: gas_  }).on('receipt', async function(receipt) {
+                      var gas2_ = await web3Marketplacecontract.methods.createMarketplaceItem(nftContractAddress, tokenId, price_).estimateGas({ from: account }).catch((e) => {
                           alert(e.message);
                       });
-                      let method2 = await wallet.contract.createMarketplaceItem(item.nftContractAddress, id, price_).send({ from: account, gas: gas2_ }).on('receipt', async function(receipt) {
+                      var method2 = await web3Marketplacecontract.methods.createMarketplaceItem(nftContractAddress, tokenId, price_).send({ from: account, gas: gas2_ }).on('receipt', async function(receipt) {
                           alert("Token is now on Sale! (Add a page refresh here as well Siddharth)")
                       });
 
@@ -47,25 +60,26 @@ export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name
               }
           }
           else {
-              let gas_ = await wallet.contract.createMarketplaceItem(item.nftContractAddress, id, price_).estimateGas({ from: account }).catch((e) => {
+              var gas_ = await web3Marketplacecontract.methods.createMarketplaceItem(nftContractAddress, tokenId, price_).estimateGas({from: account}).catch((e) => {
                   alert(e.message);
               });
-              let method = await wallet.contract.createMarketplaceItem(item.nftContractAddress, id, price_).send({ from: account, gas: gas_ }).on('receipt', async function(receipt) {
+              var method = await web3Marketplacecontract.methods.createMarketplaceItem(nftContractAddress, tokenId, price_).send({
+                  from: account,
+                  gas: gas_
+              }).on('receipt', async function (receipt) {
                   alert("Token is now on Sale! (Add a page refresh here as well Siddharth)")
               });
-
           }
       }
       else{
-         /* var gas_ = await wallet?.contract?.estimateGas.cancelMarketplaceSale(id)/!*.estimateGas({ from: account }).catch((e) => {
-              alert(e.message);
-          });*!/*/
-          //alert("gas_",gas_);
-          var method = await wallet?.contract?.cancelMarketplaceSale(id);
-          console.log("method",method);
-          alert("Token Sale is cancel! (Add a page refresh here as well Siddharth)")
+          let gas_ = await web3Marketplacecontract.methods.cancelMarketplaceSale(item.itemId).estimateGas({ from: account }).catch((e) => {
+            alert(e.message);
+          });
+          let method = await web3Marketplacecontract.methods.cancelMarketplaceSale(item.itemId).send({ from: account, gas: gas_ }).on('receipt', async function(receipt) {
+            alert("Token Sale is cancel! (Add a page refresh here as well Siddharth)")
+          });
       }
-      alert(type)
+      //alert(type)
   }
 
 
@@ -148,25 +162,26 @@ export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name
               {name}
             </Text>
 
-            <Text
-              variant={gameNameWeight}
-              color={"title"}
-              fontSize={{
-                base: "sm",
-                md: "22px",
-                xl: "xl",
-                "2xl": "2xl",
-              }}
-              height={"30px"}
-              pos={"relative"}
-            >
-              {price > 0 && `${price} BNB`}
-            </Text>
+              {price > 0 && <Text
+                  variant={gameNameWeight}
+                  color={"title"}
+                  fontSize={{
+                    base: "sm",
+                    md: "25px",
+                    xl: "xl",
+                    "2xl": "2xl",
+                  }}
+                  height={"39px"}
+                  pos={"relative"}
+                >
+                  ${price} BNB
+                </Text>
+              }
               {!price &&  <Input
                   type={"number"}
                   value={nftPrice}
-                  fontSize={{ base: '10px', md: '18px' }}
-                  placeholder={'Enter Price'}
+                  fontSize={{ base: '8px', md: '16px' }}
+                  placeholder={'Price'}
                   onChange={(e) => onChange(e)}
                   _placeholder={{
                       color: 'text.light',

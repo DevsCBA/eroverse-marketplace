@@ -11,6 +11,10 @@ import {
 import nftAbi from "../ABIs/nftAbi.json";
 
 import { collectionInfoLoaded } from "./collection";
+import Web3 from 'web3/dist/web3.min.js';
+import marketplaceAbi from "../ABIs/marketplaceAbi.json";
+window.web3 = new Web3(window.ethereum);
+
 const contractToUrl = {
   "0x7d1dcC9f99888f90cFBeB22E12f07249ecd65162":
     "https://ipfs.io/ipfs/QmdgpkkxCAz8oSr5LMp7FZUYn4ifqBJDH5iyYZfmjRewNR/", //0xBD35FC23132CA28f2C0e12f2e5EC85b1fCC4d6D9 //ORIGIN COLLECTION
@@ -24,7 +28,9 @@ const contractToUrl = {
     "https://ipfs.io/ipfs/QmfPE5mtYh6kHWWnQ3ZKH2fXuw5jpi8Z9t9JoFDyaZH4hA/", //0x0BF6eCadfa0114B00B0da17Eae00aE80B55f0596 //CELEB LOVE COLLECTION 3 JESSA RHODES
 };
 
-async function getNFT(tokenId, contAddress, price) {
+
+
+async function getNFT(tokenId, contAddress, price, itemId) {
   let url = contractToUrl[contAddress];
   if (url.slice(-1) == "/") {
     url += tokenId + ".json";
@@ -36,13 +42,7 @@ async function getNFT(tokenId, contAddress, price) {
     urlObj = await response.json();
   } catch (e) {}
 
-  const provider = new ethers.providers.Web3Provider(window?.ethereum);
-  const signer = provider.getSigner();
-  const nftContract = new ethers.Contract(
-      contAddress,
-      nftAbi,
-      signer
-  );
+  let nftContract = await new window.web3.eth.Contract(nftAbi, contAddress);
   urlObj.id = tokenId;
   urlObj.category = urlObj["name"];
   urlObj.thumbnail_url = "https://ipfs.io/ipfs/" + urlObj["image"].slice(7);
@@ -52,6 +52,7 @@ async function getNFT(tokenId, contAddress, price) {
   urlObj.price = price;
   urlObj.nftContract = nftContract;
   urlObj.nftContractAddress = contAddress;
+  urlObj.itemId = parseInt(itemId);
   return urlObj;
 }
 
@@ -91,7 +92,8 @@ export const profileLoading = () => {
       return;
     }
     let totalItems = 0,
-      account = wallet?.wallet; //"0x62412757075f4BDe3349487266771e706645478E";
+      account = wallet?.wallet;
+      //account =  "0x62412757075f4BDe3349487266771e706645478E";
     let sellerItems = await wallet.contract.fetchSellersOnSaleItems(account);
 
     console.log("sellerItems",sellerItems);
@@ -116,9 +118,9 @@ export const profileLoading = () => {
       balance = parseInt(await nftContract.balanceOf(account));
       foundCount = balance;
       count = 0;
-      if(balance==0){
+      /*if(balance==0){
         totalItems= null
-      }
+      }*/
       while (balance > 0) {
         count += 1;
         //try {
@@ -127,10 +129,10 @@ export const profileLoading = () => {
         } catch (e) {}
         if (account.toLowerCase() == owner.toLowerCase()) {
           totalItems += 1;
-          try {
-            approved = await nftContract.getApproved(count);
-          } catch (e) {}
-          if (approved.toLowerCase() == marketplaceContract.toLowerCase()) {
+          //try {
+            //approved = await nftContract.getApproved(count);
+          //} catch (e) {}
+          //if (approved.toLowerCase() == marketplaceContract.toLowerCase()) {
             found = false;
             j = 0;
             //console.log("sellerItems[j]",sellerItems[j])
@@ -143,14 +145,14 @@ export const profileLoading = () => {
                 let p = parseInt(sellerItems[j][4]).toString();
                 price = ethers.utils.formatEther(p);
                 //console.log("sellerItems[j][4]", price);
-                let res = await getNFT(count, contractAddresses[i], price);
+                let res = await getNFT(count, contractAddresses[i], price,sellerItems[j][0]);
                 nfts.push(res);
                 found = true;
               }
               j += 1;
             }
-          } else {
-            let res = await getNFT(count, contractAddresses[i], 0);
+           if(!found) {
+            let res = await getNFT(count, contractAddresses[i], 0, 0);
             nfts.push(res);
           }
           balance += -1;
@@ -164,7 +166,7 @@ export const profileLoading = () => {
     }
 
     let obj = { total: totalItems, onSaleTotal: sellerItems.length, nfts, foundNFT: foundCount };
-    //console.log("obj--",obj)
+    console.log("obj--",obj)
     dispatch(profileLoaded(obj));
   };
 };
