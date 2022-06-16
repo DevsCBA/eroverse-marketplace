@@ -2,6 +2,8 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 
 const DashboardCard = (props) => {
   const {info = {}} = props;
+
+  console.log("info",info)
   return (
     <Flex bg="background.alternative" py={4} justifyContent={"space-evenly"} borderColor="primary" borderWidth="2px" borderRadius={18} boxShadow="0px 0px 15px #ec4eaf">
       {[

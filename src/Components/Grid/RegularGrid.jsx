@@ -64,6 +64,7 @@ export const RegularGrid = (props) => {
             p2e: is_play2earn,
             p: 4,
             price: price,
+            item:element
           })}{" "}
         </Box>
       );
@@ -132,7 +133,7 @@ export const RegularGrid = (props) => {
           </Flex>
         )}
         {/* <Suspense fallback={<Box pos={{ base: "absolute", md: "fixed" }} w={{ base: "0", md: "316px" }} h={{ base: "0", md: "full" }} left={{ base: "-10em", md: "-20em", xl: "0" }} bg={"background.navigation"} />}>
-       
+
       </Suspense>
        <Suspense
           fallback={

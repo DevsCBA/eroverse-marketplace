@@ -1,10 +1,15 @@
-import { Box, Flex, Image, Skeleton,Button, Text, Badge, useBreakpointValue, AspectRatio, Spinner, Suspense,  Center} from "@chakra-ui/react";
-import React from "react";
+import { Box, Flex, Image, Skeleton,Button, Text, Input, Badge, useBreakpointValue, AspectRatio, Spinner, Suspense,  Center} from "@chakra-ui/react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import LogoBadge from "../LogoBadge";
+import {marketplaceContract} from '../../constant/marketPlace'
+import { useDispatch, useSelector } from "react-redux";
+import {ethers} from "ethers";
 
 
-export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name, category, p2e, p, price }) => {
+
+export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name, category, p2e, p, price, item }) => {
+  const wallet = useSelector((state) => state.wallet);
   const gameNameWeight = "bold";
   const DIMENSION = useBreakpointValue({ base: 250, xs: 10, sm: 250, md: 300, lg: 300, xl: 300, "2xl": 320, "3xl": 1000 });
   const TOP_MARGIN_TEXT_BOX = useBreakpointValue({ base: 185, xs: 10, sm: 185, md: 220, lg: 220, xl: 220, "2xl": 240, "3xl": 900 });
@@ -12,6 +17,56 @@ export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name
     base: "md",
     xl: "lg",
   });
+
+  const [nftPrice, setNftPrice] = useState(0)
+
+  const onChange = (e)=>{
+      setNftPrice(e.target.value);
+  }
+  const onButtonClick = async(type)=>{
+      let account = wallet?.wallet;
+      if(type === 'Sell'){
+          !nftPrice && alert('No Price Specified');
+          return;
+          let price_ = ethers.utils.formatEther(nftPrice)
+          const approvedList = await item.nftContract.getApproved(id);
+          if (!approvedList.includes(marketplaceContract)) {
+              const gas_ = await item.nftContract.approve(marketplaceContract, id).estimateGas({ from: account }).catch((e) => {
+                  alert(e.message);
+              });
+              if (gas_) {
+                  const method = await item.nftContract.approve(item.marketplaceContract, id).send({ from: account, gas: gas_  }).on('receipt', async function(receipt) {
+                      let gas2_ = await wallet.contract.createMarketplaceItem(item.nftContractAddress, id, price_).estimateGas({ from: account }).catch((e) => {
+                          alert(e.message);
+                      });
+                      let method2 = await wallet.contract.createMarketplaceItem(item.nftContractAddress, id, price_).send({ from: account, gas: gas2_ }).on('receipt', async function(receipt) {
+                          alert("Token is now on Sale! (Add a page refresh here as well Siddharth)")
+                      });
+
+                  });
+              }
+          }
+          else {
+              let gas_ = await wallet.contract.createMarketplaceItem(item.nftContractAddress, id, price_).estimateGas({ from: account }).catch((e) => {
+                  alert(e.message);
+              });
+              let method = await wallet.contract.createMarketplaceItem(item.nftContractAddress, id, price_).send({ from: account, gas: gas_ }).on('receipt', async function(receipt) {
+                  alert("Token is now on Sale! (Add a page refresh here as well Siddharth)")
+              });
+
+          }
+      }
+      else{
+         /* var gas_ = await wallet?.contract?.estimateGas.cancelMarketplaceSale(id)/!*.estimateGas({ from: account }).catch((e) => {
+              alert(e.message);
+          });*!/*/
+          //alert("gas_",gas_);
+          var method = await wallet?.contract?.cancelMarketplaceSale(id);
+          console.log("method",method);
+          alert("Token Sale is cancel! (Add a page refresh here as well Siddharth)")
+      }
+      alert(type)
+  }
 
 
   return (
@@ -28,7 +83,6 @@ export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name
         }}
         className="profil_list_block"
       > */}
-        <Link to={`games/${id}`} pos={"relative"}>
           {/* <Flex justifyContent={"center"}> */}
 
           {/* <Image
@@ -108,6 +162,19 @@ export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name
             >
               {price > 0 && `${price} BNB`}
             </Text>
+              {!price &&  <Input
+                  type={"number"}
+                  value={nftPrice}
+                  fontSize={{ base: '10px', md: '18px' }}
+                  placeholder={'Enter Price'}
+                  onChange={(e) => onChange(e)}
+                  _placeholder={{
+                      color: 'text.light',
+                  }}
+                  pl={0}
+                  pr={{base:12, md: 16}}
+                  borderWidth={1}
+              />}
 
             {/* <button className="profile_list_btn"> {price > 0 ? 'Cancel Sale' : 'Sell NFT'} </button> */}
             <Button
@@ -118,6 +185,7 @@ export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name
               color={"title"}
               size={buttonSize}
               px={9}
+              onClick={(e)=> onButtonClick(price > 0 ? "Cancel" : "Sell")}
               // className={price > 0 ? "" : "mt_dasktop_40"}
             >
               {price > 0 ? "Cancel Sale" : "Sell NFT"}
@@ -146,7 +214,7 @@ export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name
             )}*/}
 
           {/* </Flex> */}
-        </Link>
+
       {/* </Box> */}
     </>
   );

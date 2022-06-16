@@ -24,8 +24,8 @@ const contractToUrl = {
     "https://ipfs.io/ipfs/QmfPE5mtYh6kHWWnQ3ZKH2fXuw5jpi8Z9t9JoFDyaZH4hA/", //0x0BF6eCadfa0114B00B0da17Eae00aE80B55f0596 //CELEB LOVE COLLECTION 3 JESSA RHODES
 };
 
-async function getNFT(tokenId, colAddress, price) {
-  let url = contractToUrl[colAddress];
+async function getNFT(tokenId, contAddress, price) {
+  let url = contractToUrl[contAddress];
   if (url.slice(-1) == "/") {
     url += tokenId + ".json";
   }
@@ -36,10 +36,13 @@ async function getNFT(tokenId, colAddress, price) {
     urlObj = await response.json();
   } catch (e) {}
 
-  //console.log("urlObj[\"name\"];",urlObj["name"])
-
-  //console.log("urlObj[\"image\"]",urlObj["image"])
-  //console.log("urlObj[\"image\"].slice(-1) != \"g\"", urlObj["image"].slice(-1) != "g")
+  const provider = new ethers.providers.Web3Provider(window?.ethereum);
+  const signer = provider.getSigner();
+  const nftContract = new ethers.Contract(
+      contAddress,
+      nftAbi,
+      signer
+  );
   urlObj.id = tokenId;
   urlObj.category = urlObj["name"];
   urlObj.thumbnail_url = "https://ipfs.io/ipfs/" + urlObj["image"].slice(7);
@@ -47,6 +50,8 @@ async function getNFT(tokenId, colAddress, price) {
   urlObj.p = 4;
   urlObj.type = urlObj["image"].slice(-1) != "g" ? "video" : "image";
   urlObj.price = price;
+  urlObj.nftContract = nftContract;
+  urlObj.nftContractAddress = contAddress;
   return urlObj;
 }
 
@@ -86,8 +91,10 @@ export const profileLoading = () => {
       return;
     }
     let totalItems = 0,
-      account = wallet?.wallet; //"0x62412757075f4BDe3349487266771e706645478E"
+      account = wallet?.wallet; //"0x62412757075f4BDe3349487266771e706645478E";
     let sellerItems = await wallet.contract.fetchSellersOnSaleItems(account);
+
+    console.log("sellerItems",sellerItems);
     let balance;
     let count;
     let owner;
@@ -126,15 +133,16 @@ export const profileLoading = () => {
           if (approved.toLowerCase() == marketplaceContract.toLowerCase()) {
             found = false;
             j = 0;
-            while (!found) {
-              if (
+            //console.log("sellerItems[j]",sellerItems[j])
+            while (!found && j < sellerItems.length) {
+              if(sellerItems[j] &&
                 sellerItems[j][1].toLowerCase() ==
                   contractAddresses[i].toLowerCase() &&
                 parseInt(sellerItems[j][2]) == count
               ) {
                 let p = parseInt(sellerItems[j][4]).toString();
                 price = ethers.utils.formatEther(p);
-                console.log("sellerItems[j][4]", price);
+                //console.log("sellerItems[j][4]", price);
                 let res = await getNFT(count, contractAddresses[i], price);
                 nfts.push(res);
                 found = true;
@@ -156,6 +164,7 @@ export const profileLoading = () => {
     }
 
     let obj = { total: totalItems, onSaleTotal: sellerItems.length, nfts, foundNFT: foundCount };
+    //console.log("obj--",obj)
     dispatch(profileLoaded(obj));
   };
 };
