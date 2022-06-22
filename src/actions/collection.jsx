@@ -9,7 +9,7 @@ import {
   nftURL,
 } from "../constant/marketPlace";
 
-async function getNFT(collectionId, tokenId) {
+async function getNFT(collectionId, tokenId, itemId) {
   let url =
     "https://ipfs.io/ipfs/" +
     collection_contract_map[collectionId].ipfs +
@@ -29,6 +29,7 @@ async function getNFT(collectionId, tokenId) {
   urlObj.p2e = false;
   urlObj.p = 4;
   urlObj.type = urlObj["image"].slice(-1) == "4" ? "video" : "image";
+  urlObj.itemId = parseInt(itemId);
   return urlObj;
 }
 
@@ -65,7 +66,8 @@ export const collectionInfoLoading = (id) => {
             onsaleItems[i][1],
             onsaleItems[i][0],
             onsaleItems[i][3],
-            onsaleItems[i][4]
+            onsaleItems[i][4],
+
           );
           let bnbPrice = await ethers.utils.formatEther(
             parseInt(onsaleItems[i][4]).toString()

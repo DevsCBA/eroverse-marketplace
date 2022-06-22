@@ -21,7 +21,7 @@ export const Sidebar = (props) => {
         <SidebarItem icon={BiHome} onClick={onClose}>
           {t("home")}
         </SidebarItem>
-        <SidebarItem icon={BiJoystick} path="collection" onClick={onClose}>
+        <SidebarItem icon={BiJoystick} path="collection/1" onClick={onClose}>
           {t("Collection")}
         </SidebarItem>
         <SidebarItem icon={BiJoystick} path="profile" onClick={onClose}>

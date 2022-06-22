@@ -30,7 +30,7 @@ export const SingleNFT = () => {
   return (
     <>
       <Box mx={{ base: 4, md: 16 }}>
-          {loaded && isValidNft(info?.nftView) && <SingleNFTHeader nft={info?.nftView[nftId]} />}
+          {loaded && isValidNft(info?.nftView) && <SingleNFTHeader nft={info?.nftView[nftId]} account={wallet}/>}
       </Box>
 
         {collectionId && <RegularGrid info={info} filterId={parseInt(nftId)} lastReleases={trending_nft_data} loaded={loaded} title="From the same collection" CardComponent={<Card />} />}
