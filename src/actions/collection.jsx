@@ -55,7 +55,7 @@ export const collectionInfoLoading = (id) => {
         nfts = [],
         nftView = {};
       if (onsaleItems.length > 0) {
-        var floorPrice = parseInt(onsaleItems[0][4]);
+        let floorPrice = parseInt(onsaleItems[0][4]);
         for (var i = 0; i < onsaleItems.length; i++) {
           if (parseInt(onsaleItems[i][4]) < floorPrice) {
             floorPrice = parseInt(onsaleItems[i][4]);
