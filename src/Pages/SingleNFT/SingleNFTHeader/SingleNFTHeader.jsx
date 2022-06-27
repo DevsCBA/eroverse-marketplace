@@ -37,24 +37,24 @@ export const SingleNFTHeader = ({nft,account}) => {
             <source src={thumbnail_url} type="video/mp4"/>
           </video>
           <Flex justifyContent={{ base: "center", md: "flex-start" }}>
-          <Button alignItems="center"
-              variant={"primary"}
-              display="inline-flex"
-              size={"sm"}
-              onClick={onBuy}
-              w="fit-content"
-              fontSize={{
-                base: "sm",
-                md: "md",
-                lg: "md",
-              }}
-              color={"white"}
-              px={8}
-              py={5}
-              my={3}
-          >
-            Buy
-          </Button>
+          {/*<Button alignItems="center"*/}
+          {/*    variant={"primary"}*/}
+          {/*    display="inline-flex"*/}
+          {/*    size={"sm"}*/}
+          {/*    onClick={onBuy}*/}
+          {/*    w="fit-content"*/}
+          {/*    fontSize={{*/}
+          {/*      base: "sm",*/}
+          {/*      md: "md",*/}
+          {/*      lg: "md",*/}
+          {/*    }}*/}
+          {/*    color={"white"}*/}
+          {/*    px={8}*/}
+          {/*    py={5}*/}
+          {/*    my={3}*/}
+          {/*>*/}
+          {/*  Buy*/}
+          {/*</Button>*/}
             </Flex>
         </div>
         <Flex w={"full"} overflow="hidden" justifyContent="space-evenly" direction="column" px={{ base: 0, md: "4%", lg: "5%", xl: "3%", "2xl": "5%" }} py={{ base: "7%", md: "4%", lg: "7%" }}>
@@ -99,12 +99,13 @@ export const SingleNFTHeader = ({nft,account}) => {
                 md: "md",
                 lg: "md",
               }}
+              onClick={onBuy}
               color={"white"}
               px={8}
               py={5}
               my={3}
             >
-              Make Offer
+              Buy
             </Button>
           </Flex>
         </Flex>
