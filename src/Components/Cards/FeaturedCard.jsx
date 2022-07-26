@@ -1,11 +1,8 @@
-import { Box, Flex, Image, Skeleton,Button, Text, Input, Badge, useBreakpointValue, AspectRatio, Spinner, Suspense,  Center} from "@chakra-ui/react";
+import { Flex, Button, Text, Input, useBreakpointValue} from "@chakra-ui/react";
 import React, {useState} from "react";
-import { Link } from "react-router-dom";
-import LogoBadge from "../LogoBadge";
 import {marketplaceContract} from '../../constant/marketPlace';
 import marketplaceAbi from '../../ABIs/marketplaceAbi.json'
-import { useDispatch, useSelector } from "react-redux";
-import {ethers} from "ethers";
+import { useSelector } from "react-redux";
 import Web3 from 'web3/dist/web3.min.js';
 
 window.web3 = new Web3(window.ethereum);
@@ -16,8 +13,6 @@ window.web3 = new Web3(window.ethereum);
 export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name, category, p2e, p, price, item }) => {
   const wallet = useSelector((state) => state.wallet);
   const gameNameWeight = "bold";
-  const DIMENSION = useBreakpointValue({ base: 250, xs: 10, sm: 250, md: 300, lg: 300, xl: 300, "2xl": 320, "3xl": 1000 });
-  const TOP_MARGIN_TEXT_BOX = useBreakpointValue({ base: 185, xs: 10, sm: 185, md: 220, lg: 220, xl: 220, "2xl": 240, "3xl": 900 });
   const buttonSize = useBreakpointValue({
     base: "md",
     xl: "lg",
@@ -32,6 +27,7 @@ export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name
   const onButtonClick = async(type)=>{
       let account = wallet?.wallet;
       let tokenId = item.tokenId;
+      console.log('tokenId: ', tokenId);
       const nftContractAddress = item.nftContractAddress;
       const web3Marketplacecontract =  await new window.web3.eth.Contract(marketplaceAbi, marketplaceContract);
       if(type === 'Sell'){
@@ -56,7 +52,9 @@ export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name
                           alert("Token is now on Sale! (Add a page refresh here as well Siddharth)")
                       });
 
+                      console.log('method2: ', method2);
                   });
+                  console.log('method: ', method);
               }
           }
           else {
@@ -69,6 +67,8 @@ export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name
               }).on('receipt', async function (receipt) {
                   alert("Token is now on Sale! (Add a page refresh here as well Siddharth)")
               });
+
+              console.log('method: ', method);
           }
       }
       else{
@@ -78,6 +78,7 @@ export const FeaturedCard = ({ id, collectionId, showCollection, thumbnail, name
           let method = await web3Marketplacecontract.methods.cancelMarketplaceSale(item.itemId).send({ from: account, gas: gas_ }).on('receipt', async function(receipt) {
             alert("Token Sale is cancel! (Add a page refresh here as well Siddharth)")
           });
+          console.log('method: ', method);
       }
       //alert(type)
   }

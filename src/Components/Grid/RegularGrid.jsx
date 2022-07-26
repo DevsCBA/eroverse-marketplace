@@ -2,9 +2,6 @@ import {
   Box,
   Flex,
   Heading,
-  useBreakpointValue,
-  Text,
-  Suspense,
   Center,
   Spinner,
 } from "@chakra-ui/react";
@@ -14,11 +11,9 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import "swiper/css";
 
+// eslint-disable-next-line
 export const RegularGrid = (props) => {
   const {
-    lastReleases,
-    translate: t,
-    loaded,
     CardComponent,
     title,
     my,
@@ -34,8 +29,11 @@ export const RegularGrid = (props) => {
   const walletState = reduxState.wallet.connected;
   const totalnftbyRedux = reduxState.profile.profile.total;
   const [showNotFound, setShowNotFound] = useState("");
-
+  
+  // eslint-disable-next-line
   const mapArray = info?.nfts || collections || [];
+
+  // eslint-disable-next-line
   const sliderOptions = mapArray.map((element, index) => {
     const { id, name, category_name, thumbnail_url, is_play2earn, price } =
       element || {};
@@ -72,33 +70,14 @@ export const RegularGrid = (props) => {
   });
 
 
-  const loadingSlides = [1, 2, 3, 4].map((slide, index) =>
-    cloneElement(CardComponent, {
-      key: index,
-      id: index,
-      name: "",
-      category: "",
-      thumbnail: "",
-    })
-  );
 
-  const isLessThan4 = lastReleases.length < 4;
-  const DIMENSION = useBreakpointValue({
-    base: "repeat(2, 1fr)",
-    xs: "repeat(2, 1fr)",
-    sm: "repeat(2, 1fr)",
-    md: "repeat(3, 1fr)",
-    lg: isLessThan4 ? "repeat(3, 1fr)" : "repeat(3, 1fr)",
-    xl: "repeat(3, 1fr)",
-    "2xl": isLessThan4 ? "repeat(3, 1fr)" : "repeat(3, 1fr)",
-    "3xl": isLessThan4 ? "repeat(3, 1fr)" : "repeat(3, 1fr)",
-  });
+
 
   useEffect(() => {
-    if (walletState && totalnftbyRedux == 0) {
+    if (walletState && totalnftbyRedux === 0) {
       setSpinnerState(true);
     }
-    if (walletState && totalnftbyRedux == null) {
+    if (walletState && totalnftbyRedux === null) {
       setSpinnerState(false);
       setShowNotFound("Not Found any NFT");
     }
@@ -108,7 +87,7 @@ export const RegularGrid = (props) => {
   }, [walletState, totalnftbyRedux]);
 
   useEffect(() => {
-    if (mapArray[0] != undefined) {
+    if (mapArray[0] !== undefined) {
       setSpinnerState(false);
     }
   }, [mapArray]);

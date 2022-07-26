@@ -4,12 +4,9 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { homeStartLoading } from "../../actions/game";
 import { FeaturedSlider } from "./FeaturedSlider/FeaturedSlider";
-import { FeaturedCreators } from "./FeaturedCreators/FeaturedCreators";
-import { trending_nft_data, mockDataForFeaturedCollection, mockDataFeaturedCreators } from "../../Assets/data/data";
 import { SwiperGrid } from "../../Components/Grid/SwiperGrid";
 import { Card } from "../../Components/Cards/Card";
 import { RegularGrid } from "../../Components/Grid/RegularGrid";
-import { FeaturedCard } from "../../Components/Cards/FeaturedCard";
 import "./homeScreen.css";
 import {trendingNftLoading, featuredNftLoading} from "../../actions/collection";
 import {collection_contract_map} from '../../constant/marketPlace';
@@ -21,10 +18,11 @@ export const HomeScreen = () => {
     const { wallet, network} = useSelector((state) => state.wallet);
     const { last_release, featured , loaded} = useSelector((state) => state.games);
     const {trendingNfts, featuredCollections , loaded:collectionLoaded } = useSelector((state) => state.collection);
+    // eslint-disable-next-line
     useEffect(() => {
         dispatch(featuredNftLoading());
         dispatch(trendingNftLoading());
-    }, [wallet,network]);
+    }, [wallet,network,dispatch]);
 
   useEffect(() => {
     dispatch(homeStartLoading());

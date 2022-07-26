@@ -2,7 +2,7 @@ import { Box, Flex, IconButton } from "@chakra-ui/react";
 import { SidebarItem } from "./SidebarItem";
 import { useTranslation } from "react-i18next";
 import { BiHome, BiJoystick } from "react-icons/bi";
-import { FiRepeat, FiTrendingUp, FiHexagon, FiX } from "react-icons/fi";
+import { FiX } from "react-icons/fi";
 import { LogoGrande } from "../../Ui/Logo/LogoGrande";
 import { Link } from "react-router-dom";
 export const Sidebar = (props) => {

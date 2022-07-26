@@ -5,8 +5,6 @@ import {
 	useBreakpointValue,
 	useToast,
 } from '@chakra-ui/react';
-import axios from 'axios';
-
 
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -47,8 +45,10 @@ const Metamask = () => {
 	};
 
 	useEffect(() => {
+		console.log(setUserBalance);
+		console.log(provider);
 		dispatch(startBalanceCharge(userBalance));
-	}, [userBalance,dispatch,wallet]);
+	}, [userBalance,dispatch,wallet,provider]);
 
 	const connectWalletHandler = () => {
 
@@ -79,7 +79,7 @@ const Metamask = () => {
 						});
 						ethereum.on('networkChanged', async function  (netId) {
 							const networkId = process.env.REACT_APP_ENV === 'dev' ? 4: 1;
-							if(networkId.toString() !=netId.toString()){
+							if(networkId.toString() !== netId.toString()){
 								dispatch(startLogin(result[0],null, netId))
 							}
 							else {
@@ -117,19 +117,7 @@ const Metamask = () => {
 		}
 	};
 
-	const getWalletTokens = async () => {
 
-		let url = process.env.REACT_APP_API_PROXY + '/bscscan/tokens';
-        axios.post(url, { wallet })
-        .then(result => {
-			setUserBalance(
-				parseFloat(
-					ethers.utils.formatEther(result.data)
-				).toFixed(0)
-			)
-        })
-        .catch(error => console.log('Get tokens error: ', error));
-	};
 
 	useEffect(() => {
 		let walletConnected = localStorage.getItem('connected');

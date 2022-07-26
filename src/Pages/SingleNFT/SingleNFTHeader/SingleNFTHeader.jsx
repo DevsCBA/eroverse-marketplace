@@ -1,5 +1,4 @@
-import { Box, Flex, Image, Text, Button } from "@chakra-ui/react";
-import image from "../../../Assets/Images/trending_nft1.png";
+import { Box, Flex, Text, Button } from "@chakra-ui/react";
 import LogoBadge from "../../../Components/LogoBadge";
 import { useBreakpointValue } from '@chakra-ui/react';
 import Web3 from 'web3/dist/web3.min.js';
@@ -11,7 +10,7 @@ window.web3 = new Web3(window.ethereum);
 
 
 export const SingleNFTHeader = ({nft,account}) => {
- const {createdBy, name,seller, price, thumbnail_url, type} = nft || {}
+ const {name,seller, price, thumbnail_url} = nft || {}
   const maxWidth = useBreakpointValue({
     md: "100%",
     lg: "40%",
@@ -23,6 +22,7 @@ export const SingleNFTHeader = ({nft,account}) => {
     const web3Marketplacecontract =  await new window.web3.eth.Contract(marketplaceAbi, marketplaceContract);
     let price_ = await Web3.utils.toWei(nft?.price);
     const gas_ = await web3Marketplacecontract.methods.createMarketplaceSale(nftItemId).estimateGas({ from: account, value: price_ });
+    // eslint-disable-next-line
     const method = await web3Marketplacecontract.methods.createMarketplaceSale(nftItemId).send({ from: account, gas: gas_, value: price_}).on('receipt', async function(receipt) {
       alert("You have successfully bought this NFT!");
     });

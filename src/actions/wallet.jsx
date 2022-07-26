@@ -36,7 +36,3 @@ const chargeBalance = ( balance ) => ({
     payload: balance
 });
 
-const walletUpdate = ( wallet ) => ({
-    type: types.walletLogin,
-    payload: wallet
-});

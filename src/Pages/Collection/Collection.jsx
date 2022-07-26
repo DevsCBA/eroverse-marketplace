@@ -1,8 +1,5 @@
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { homeStartLoading } from "../../actions/game";
-import { trending_nft_data } from "../../Assets/data/data";
 import { CollectionHeader } from "./CollectionHeader/CollectionHeader";
 import { Card } from "../../Components/Cards/Card";
 import { RegularGrid } from "../../Components/Grid/RegularGrid";
@@ -14,8 +11,6 @@ import { useParams } from "react-router-dom";
 import {AddressCollectionMap} from "../../constant/marketPlace";
 
 export const Collection = () => {
-  const [collectionName, setCollectionName] = useState(null);
-  const { t } = useTranslation(["home"]);
   const dispatch = useDispatch();
   const { id } = useParams();
   const { info } = useSelector((state) => state.collection);
@@ -29,7 +24,7 @@ export const Collection = () => {
     if(!item?.contractAddress){
       return  false
     }
-    return id == AddressCollectionMap[item.contractAddress]
+    return id === AddressCollectionMap[item.contractAddress]
   }
 
 

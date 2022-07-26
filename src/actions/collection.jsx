@@ -4,9 +4,7 @@ import { store } from "../store/store";
 import { ethers } from "ethers";
 import {
   AddressCollectionMap,
-  collection_contract_map, marketplaceContract, contractAddresses,
-  nftContract,
-  nftURL,
+  collection_contract_map
 } from "../constant/marketPlace";
 
 async function getNFT(collectionId, tokenId, itemId) {
@@ -28,7 +26,7 @@ async function getNFT(collectionId, tokenId, itemId) {
   urlObj.thumbnail_url = "https://ipfs.io/ipfs/" + urlObj["image"].slice(7);
   urlObj.p2e = false;
   urlObj.p = 4;
-  urlObj.type = urlObj["image"].slice(-1) == "4" ? "video" : "image";
+  urlObj.type = urlObj["image"].slice(-1) === "4" ? "video" : "image";
   urlObj.itemId = parseInt(itemId);
   return urlObj;
 }
@@ -37,6 +35,7 @@ export const collectionInfoLoading = (id) => {
   const collectionContact = collection_contract_map[id].address,
     collectionIPFS = collection_contract_map[id].ipfs,
     collectionName = collection_contract_map[id].name;
+    console.log(collectionIPFS);
 
   return async (dispatch) => {
     let wallet = await store.getState().wallet;

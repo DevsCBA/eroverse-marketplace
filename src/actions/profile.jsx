@@ -3,16 +3,12 @@ import { types } from "../types/types";
 import { store } from "../store/store";
 import { ethers } from "ethers";
 import {
-  AddressCollectionMap,
-  collection_contract_map,
   contractAddresses,
-  marketplaceContract,
 } from "../constant/marketPlace";
 import nftAbi from "../ABIs/nftAbi.json";
 
 import { collectionInfoLoaded } from "./collection";
 import Web3 from 'web3/dist/web3.min.js';
-import marketplaceAbi from "../ABIs/marketplaceAbi.json";
 window.web3 = new Web3(window.ethereum);
 
 const contractToUrl = {
@@ -32,7 +28,7 @@ const contractToUrl = {
 
 async function getNFT(tokenId, contAddress, price, itemId) {
   let url = contractToUrl[contAddress];
-  if (url.slice(-1) == "/") {
+  if (url.slice(-1) === "/") {
     url += tokenId + ".json";
   }
   //console.log("tokenId, colAddress",tokenId, colAddress)
@@ -48,7 +44,7 @@ async function getNFT(tokenId, contAddress, price, itemId) {
   urlObj.thumbnail_url = "https://ipfs.io/ipfs/" + urlObj["image"].slice(7);
   urlObj.p2e = false;
   urlObj.p = 4;
-  urlObj.type = urlObj["image"].slice(-1) != "g" ? "video" : "image";
+  urlObj.type = urlObj["image"].slice(-1) !== "g" ? "video" : "image";
   urlObj.price = price;
   urlObj.nftContract = nftContract;
   urlObj.nftContractAddress = contAddress;
@@ -100,7 +96,6 @@ export const profileLoading = () => {
     let balance;
     let count;
     let owner;
-    let approved;
     let found;
     let j;
     let price;
@@ -127,7 +122,7 @@ export const profileLoading = () => {
         try {
           owner = await nftContract.ownerOf(count);
         } catch (e) {}
-        if (account.toLowerCase() == owner.toLowerCase()) {
+        if (account.toLowerCase() === owner.toLowerCase()) {
           totalItems += 1;
           //try {
             //approved = await nftContract.getApproved(count);
@@ -138,9 +133,9 @@ export const profileLoading = () => {
             //console.log("sellerItems[j]",sellerItems[j])
             while (!found && j < sellerItems.length) {
               if(sellerItems[j] &&
-                sellerItems[j][1].toLowerCase() ==
+                sellerItems[j][1].toLowerCase() ===
                   contractAddresses[i].toLowerCase() &&
-                parseInt(sellerItems[j][2]) == count
+                parseInt(sellerItems[j][2]) === count
               ) {
                 let p = parseInt(sellerItems[j][4]).toString();
                 price = ethers.utils.formatEther(p);

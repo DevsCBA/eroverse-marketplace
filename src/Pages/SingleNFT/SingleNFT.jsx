@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import { Box } from "@chakra-ui/react";
 import { SingleNFTHeader } from "./SingleNFTHeader/SingleNFTHeader";
 
@@ -6,20 +6,18 @@ import { trending_nft_data } from "../../Assets/data/data";
 import {useDispatch, useSelector} from "react-redux";
 import { Card } from "../../Components/Cards/Card";
 import { RegularGrid } from "../../Components/Grid/RegularGrid";
-import { useNavigate, useParams } from "react-router-dom";
-import {collectionInfoLoading, collectionNftLoading} from "../../actions/collection";
-import {homeStartLoading} from "../../actions/game";
+import { useParams } from "react-router-dom";
+import {collectionInfoLoading} from "../../actions/collection";
 import {AddressCollectionMap} from "../../constant/marketPlace"
 
 export const SingleNFT = () => {
     const dispatch = useDispatch();
     const { collectionId,nftId } = useParams();
-    const {loaded,nft, info} = useSelector((state) => state.collection);
-    const { wallet,network} = useSelector((state) => state.wallet);
-    const [loadData, setLoadData] = useState(null);
+    const {loaded, info} = useSelector((state) => state.collection);
+    const { wallet} = useSelector((state) => state.wallet);
     useEffect(()=>{
             dispatch(collectionInfoLoading(parseInt(collectionId)))
-    },[wallet, collectionId, nftId])
+    },[wallet, collectionId, nftId,dispatch])
 
     const isValidNft = (item) =>{
         if(item && item[nftId] && AddressCollectionMap[item[nftId].nftContract] === parseInt(collectionId)){

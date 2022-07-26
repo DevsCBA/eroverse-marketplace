@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Flex, Image, Skeleton, SkeletonText, Text } from "@chakra-ui/react";
+import { Badge, Box, Button, Flex, SkeletonText, Text } from "@chakra-ui/react";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -11,34 +11,9 @@ export const Card = ({ id, collectionId, showCollection, thumbnail, name, catego
     }
   return (
     <>
-      {/* <Box
-        ml={15}
-        mr={15}
-        mb={20}
-        width={{
-          base: "calc(100% - 30px)",
-          md: "calc(50% - 30px)",
-          lg: "calc(33.33% - 30px)",
-          xl: "calc(33.33% - 30px)",
-        }}
-        className="profil_list_block"
-      > */}
       <Link to={linkUrl} display={"block"} pos={"relative"}>
         <Flex direction={"column"} alignItems={"center"}>
           <Flex flexWrap="wrap">
-            {/*<Image
-              fallback={<Skeleton h={"full"} w={"full"} />}
-              src={thumbnail}
-              // h={400}
-              // w={370}
-              alt={name}
-              objectFit={"cover"}
-              borderRadius={{
-                base: "17px",
-                md: "20px",
-              }}
-            />
-*/}
             <div className="profile_list_video">
               <video key={thumbnail} autoPlay loop>
                 <source src={thumbnail} type="video/mp4" />

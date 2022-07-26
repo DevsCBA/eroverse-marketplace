@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
 export const SwiperGrid = (props) => {
-  const { lastReleases, translate: t, loaded, CardComponent, title } = props;
+  const { lastReleases, loaded, CardComponent, title } = props;
   const [swiper, setSwiper] = useState(null);
   const slidesAmount = useBreakpointValue({ base: 2, lg: 3, "2xl": 3 });
   const spaceBetweenSlides = useBreakpointValue({

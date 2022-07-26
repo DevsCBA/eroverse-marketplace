@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Text, Skeleton, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Flex, Image, Text, Skeleton } from "@chakra-ui/react";
 import collection_banner from "../../../Assets/Images/collection_banner.png";
 import LogoBadge from "../../../Components/LogoBadge";
 import bc_address_icon from "../../../Assets/Images/bc_address_icon.png";
